@@ -10,7 +10,8 @@ int main(){
     fprintf(stdout,"Created exe\n");
     //test_generic_list();
     
-    list_t* hierarchy_list = initialize_list();
+    //list_t* hierarchy_list = initialize_list();
+
     return 0;
 }
 
@@ -26,4 +27,6 @@ void test_generic_list(){
     tail_users_node->user_index = 18;
 
     fprintf(stdout,"Head: %d\nTail:\n",((users_node_t*)my_list->head)->user_index);
+
+    free_users_list(&my_list);
 }
