@@ -48,4 +48,12 @@ address_node_t* initialize_address_node();
 list_t* initialize_list();
 dns_server_t* initialize_dns_server();
 
+void free_users_node(users_node_t** users_node);
+void free_address_node(address_node_t** address_node);
+void free_dns_node(dns_node_t** dns_node);
+void free_dns_server(dns_server_t** dns_server);
+void free_addresses_list(list_t** list);
+void free_users_list(list_t** list);
+void free_children_list(list_t** list);
+
 #endif

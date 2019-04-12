@@ -8,7 +8,9 @@
 
 int main(){
     fprintf(stdout,"Created exe\n");
-    test_generic_list();
+    //test_generic_list();
+    
+    list_t* hierarchy_list = initialize_list();
     return 0;
 }
 
