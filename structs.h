@@ -12,7 +12,7 @@ typedef struct List{
     void* head;
     void* tail;
     int nodes_count;
-}List;
+}list_t;
 
 typedef struct address_node_t{
     char* name;
@@ -40,5 +40,12 @@ typedef struct dns_node_t{
     struct dns_node_t* next;
     struct dns_node_t* prev;
 }dns_node_t;
+
+
+users_node_t* initialize_users_node();
+dns_node_t* initialize_dns_node();
+address_node_t* initialize_address_node();
+list_t* initialize_list();
+dns_server_t* initialize_dns_server();
 
 #endif
