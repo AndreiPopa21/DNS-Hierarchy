@@ -9,8 +9,9 @@
 int main(){
     fprintf(stdout,"Created exe\n");
 
-    list_t* list = initialize_list();
+    dns_server_t* new_dns = initialize_dns_server();
 
     fprintf(stdout,"Finished exe\n");
+    
     return 0;
 }

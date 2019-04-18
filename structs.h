@@ -61,5 +61,6 @@ void free_children_list(list_t** list);
 */
 
 list_t* initialize_list();
+dns_server_t* initialize_dns_server();
 
 #endif

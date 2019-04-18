@@ -8,6 +8,14 @@ list_t* initialize_list(){
     return new_list;
 }
 
+dns_server_t* initialize_dns_server(){
+    dns_server_t* new_dns = (dns_server_t*)calloc(1,sizeof(dns_server_t));
+    new_dns->parent = NULL;
+    new_dns->isFault = 0;
+    new_dns->addresses = NULL;
+    new_dns->children = initialize_list();
+    return new_dns;
+}
 
 /*
 users_node_t* initialize_users_node(){
