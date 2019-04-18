@@ -17,8 +17,42 @@ dns_server_t* initialize_dns_server(){
     new_dns->max_addr_count = MAX_ADDR_COUNT;
     new_dns->addresses = (char**)calloc(MAX_ADDR_COUNT,sizeof(char*));
     new_dns->children = initialize_list();
+    new_dns->debugCode = 0;
     return new_dns;
 }
+
+dns_node_t* initialize_dns_node(){
+    dns_node_t* new_dns_node = (dns_node_t*)calloc(1,sizeof(dns_node_t));
+    new_dns_node->dns_server = NULL;
+    new_dns_node->next = NULL;
+    new_dns_node->prev = NULL;
+    return new_dns_node;
+}
+
+void push_back_dns_child(dns_server_t** parent, dns_server_t** child){
+    if(!(*parent))
+        return;
+    if(!(*child))
+        return;
+    (*child) -> parent = (*parent);
+    push_back_dns_list(&((*parent)->children),*child);
+}
+
+void push_back_dns_list(list_t** list, dns_server_t* dns_server){
+    if(!(*list))
+        return;
+    if(!dns_server)
+        return;
+    dns_node_t* new_dns_node = initialize_dns_node();
+    new_dns_node->dns_server = dns_server;
+    new_dns_node->next = NULL;
+    new_dns_node->prev = (*list)->tail;
+    (*list)->nodes_count += 1;
+    (*list)->tail = new_dns_node;
+}
+
+
+
 
 void free_dns_server(dns_server_t** dns){
     if(!(*dns))
@@ -36,6 +70,14 @@ void free_dns_server(dns_server_t** dns){
     free((*dns));
 }
 
+void free_dns_node(dns_node_t** dns_node){
+    if(!(*dns_node))
+        return;
+    (*dns_node)->dns_server = NULL;
+    (*dns_node)->next = NULL;
+    (*dns_node)->prev = NULL;
+    free((*dns_node));
+}
 
 
 /*
