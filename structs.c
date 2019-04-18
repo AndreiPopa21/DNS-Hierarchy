@@ -1,5 +1,6 @@
 #include "structs.h"
 
+/*
 users_node_t* initialize_users_node(){
     users_node_t* users_node = (users_node_t*)calloc(1,sizeof(users_node_t));
     users_node->user_index = -1;
@@ -92,7 +93,7 @@ void free_dns_server(dns_server_t** dns_server){
     free(*dns_server);
 }
 
-void free_addresses_list(list_t** list){
+void free_addresses_list(list_t** list){    
     if(!(*list)){
         fprintf(stdout,"Attempted to free null list\n");
         return;
@@ -153,4 +154,4 @@ void free_children_list(list_t** list){
     (*list)->nodes_count = 0;
 
     free(*list);
-}
+}*/

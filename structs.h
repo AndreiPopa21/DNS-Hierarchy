@@ -14,26 +14,29 @@ typedef struct List{
     int nodes_count;
 }list_t;
 
+/*
 typedef struct address_node_t{
     char* name;
     struct address_node_t* next;
     struct address_node_t* prev;
-}address_node_t;
+}address_node_t;*/
 
 typedef struct dns_server_t{
     struct dns_server_t* parent;
     struct List* addresses;
     struct List* children;
-    struct List* users;
+    /*struct List* users;*/
     int isFault;
 }dns_server_t;
 
+/*
 typedef struct users_node_t{
     int user_index;
     struct dns_server_t* dns_server;
     struct users_node_t* next;
     struct users_node_t* prev;
 }users_node_t;
+
 
 typedef struct dns_node_t{
     struct dns_servet_t* dns_server;
@@ -55,5 +58,5 @@ void free_dns_server(dns_server_t** dns_server);
 void free_addresses_list(list_t** list);
 void free_users_list(list_t** list);
 void free_children_list(list_t** list);
-
+*/
 #endif
