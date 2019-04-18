@@ -27,15 +27,26 @@ void test(){
     dns_server_t* fourth = initialize_dns_server(4);
 
     list_t* list = initialize_list();
-        push_back_dns_list(&list,second);
-
+    push_back_dns_list(&list,second);
+    push_back_dns_list(&list,third);
+/*
     push_back_dns_list(&list,first);
     push_back_dns_list(&list,third);
     push_back_dns_list(&list,fourth);
 
     print_dns_list(&list);
-    test_get_node_at(&list,4);
+   // test_get_node_at(&list,4);
     print_dns_list(&list);
+
+    free_dns_list(&list);*/
+    print_dns_list(&list);
+    //free_dns_list(&list);
+    //print_dns_list(&list);
+
+    //free_dns_server(&first);
+    //free_dns_server(&second);
+    //free_dns_server(&third);
+    //free_dns_server(&fourth);
 }
 
 void test_get_node_at(list_t** list,int position){

@@ -98,6 +98,7 @@ void print_dns_list(list_t** list){
         fprintf(stdout,"Could not print list, head is NULL\n");
         return;
     }
+    
     if((*list)->tail == NULL){
         fprintf(stdout,"I won't print list, tail should not be NULL\n");
         return;
@@ -146,25 +147,44 @@ void free_dns_server(dns_server_t** dns){
     free((*dns)->addresses);
     /*for (i = 0; i < (*dns)->children->nodes_count; i++)
         free_dns_node()*/
-    dns_node_t* iterator;
-    for(iterator = (*dns)->children->head; iterator!=NULL; ){
+    //dns_node_t* iterator;
+   /* for(iterator = (*dns)->children->head; iterator!=NULL; ){
         dns_node_t* tmp = iterator;
         iterator = iterator->next;
         free(tmp);
     }
-    free((*dns)->children);
+    free((*dns)->children);*/
+    free_dns_list(&((*dns)->children));
+    
     free((*dns));
 }
 
 void free_dns_node(dns_node_t** dns_node){
     if(!(*dns_node))
         return;
+    fprintf(stdout,"Se curata %p\n",*dns_node);
     (*dns_node)->dns_server = NULL;
     (*dns_node)->next = NULL;
     (*dns_node)->prev = NULL;
     free((*dns_node));
 }
 
+void free_dns_list(list_t** list){
+    if(!(*list))
+        return;
+    
+    dns_node_t* tmp;
+    while(!(*list)->head){
+        tmp = (*list)->head;
+        (*list)->head = (*list)->head->next;
+        free_dns_node(&tmp);
+    }
+
+    (*list)->nodes_count = 0;
+    (*list)->head = NULL;
+    (*list)->tail = NULL;
+    free((*list));
+}
 
 /*
 users_node_t* initialize_users_node(){
