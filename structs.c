@@ -61,6 +61,32 @@ void push_back_dns_list(list_t** list, dns_server_t* dns_server){
     (*list)->tail = new_dns_node;
 }
 
+dns_node_t* get_dns_node_at(list_t** list, int position){
+    if(!(*list)){
+        fprintf(stdout,"[GET_DNS_NODE_AT]: list empty\n");
+        return NULL;
+    }
+    if(position < 0){
+        fprintf(stdout,"[GET_DNS_NODE_AT]: invalid position\n");
+        return NULL;
+    }
+    int nodes_count = (*list)->nodes_count;
+    if(position>=nodes_count){
+        fprintf(stdout,"[GET_DNS_NODE_AT]: invalid position\n");
+        return NULL;
+    }
+
+    dns_node_t* iterator;
+    int i;
+    for(i = 0; i < position; i++){
+        if(!iterator){
+            fprintf(stdout,"[GET_DNS_NODE_AT]: you have a problem with nodes count\n");
+            return NULL;
+        }
+        iterator = iterator->next;
+    }
+    return iterator;
+}
 
 void print_dns_list(list_t** list){
     if(!(*list)){
