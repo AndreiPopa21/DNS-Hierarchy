@@ -66,6 +66,14 @@ void free_dns_server(dns_server_t** dns){
         }
     }
     free((*dns)->addresses);
+    /*for (i = 0; i < (*dns)->children->nodes_count; i++)
+        free_dns_node()*/
+    dns_node_t* iterator;
+    for(iterator = (*dns)->children->head; iterator!=NULL; ){
+        dns_node_t* tmp = iterator;
+        iterator = iterator->next;
+        free(tmp);
+    }
     free((*dns)->children);
     free((*dns));
 }
