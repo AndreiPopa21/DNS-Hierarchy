@@ -8,6 +8,8 @@
 #include "utils.h"
 #include "tasks.h"
 
+#define MAX_ADDR_COUNT 20
+
 typedef struct List{
     struct dns_server_t* head;
     struct dns_server_t* tail;
@@ -24,8 +26,9 @@ typedef struct address_node_t{
 typedef struct dns_server_t{
     struct dns_server_t* parent;
     char** addresses;
-    struct List* children;
+    int max_addr_count;
     int addresses_count;
+    struct List* children;
     /*struct List* users;*/
     int isFault;
 }dns_server_t;
@@ -64,7 +67,6 @@ void free_children_list(list_t** list);
 list_t* initialize_list();
 dns_server_t* initialize_dns_server();
 
-void free_list(list_t** list);
 void free_dns_server(dns_server_t** dns);
 
 #endif

@@ -14,6 +14,8 @@ dns_server_t* initialize_dns_server(){
     new_dns->isFault = 0;
     new_dns->addresses = NULL;
     new_dns->addresses_count = 0;
+    new_dns->max_addr_count = MAX_ADDR_COUNT;
+    new_dns->addresses = (char**)calloc(MAX_ADDR_COUNT,sizeof(char*));
     new_dns->children = initialize_list();
     return new_dns;
 }
@@ -24,13 +26,17 @@ void free_dns_server(dns_server_t** dns){
     (*dns)->isFault = 0;
     (*dns)->parent = NULL;
     int i;
-    for(i = 0;i< (*dns)->addresses_count; i++){
-        free((*dns)->addresses[i]);
+    for(i = 0;i< (*dns)->max_addr_count; i++){
+        if((*dns)->addresses[i]!=NULL){
+            free((*dns)->addresses[i]);
+        }
     }
     free((*dns)->addresses);
     free((*dns)->children);
     free((*dns));
 }
+
+
 
 /*
 users_node_t* initialize_users_node(){
