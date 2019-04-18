@@ -10,8 +10,9 @@ int main(){
     fprintf(stdout,"Created exe\n");
 
     dns_server_t* new_dns = initialize_dns_server();
-
-    fprintf(stdout,"Finished exe\n");
+    free_dns_server(&new_dns);
     
+    fprintf(stdout,"Finished exe\n");
+
     return 0;
 }
