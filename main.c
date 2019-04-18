@@ -7,6 +7,7 @@
 #include "structs.h"
 
 void test();
+void test_get_node_at(list_t** list,int position);
 
 int main(){
     fprintf(stdout,"Created exe\n");
@@ -26,13 +27,25 @@ void test(){
     dns_server_t* fourth = initialize_dns_server(4);
 
     list_t* list = initialize_list();
+        push_back_dns_list(&list,second);
+
     push_back_dns_list(&list,first);
-    push_back_dns_list(&list,second);
     push_back_dns_list(&list,third);
     push_back_dns_list(&list,fourth);
 
     print_dns_list(&list);
+    test_get_node_at(&list,4);
+    print_dns_list(&list);
+}
 
-    
+void test_get_node_at(list_t** list,int position){
+    fprintf(stdout,"Test get node at\n");
+    dns_node_t* dns = get_dns_node_at(list,position);
+    if(!dns){
+        fprintf(stdout,"You received empty node\n");
+    }else{
+        fprintf(stdout,"Index of node at %d position is %d\n",position,dns->dns_server->server_index);
+       // dns->dns_server->server_index = 1212;
+    }
 }
 

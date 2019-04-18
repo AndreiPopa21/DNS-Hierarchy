@@ -76,7 +76,7 @@ dns_node_t* get_dns_node_at(list_t** list, int position){
         return NULL;
     }
 
-    dns_node_t* iterator;
+    dns_node_t* iterator = (*list)->head;
     int i;
     for(i = 0; i < position; i++){
         if(!iterator){
@@ -131,7 +131,6 @@ int get_dns_node_server_index(dns_node_t** dns_node){
 
     return (*dns_node)->dns_server-> server_index;
 }
-
 
 void free_dns_server(dns_server_t** dns){
     if(!(*dns))

@@ -81,7 +81,7 @@ void push_back_dns_child(dns_server_t** parent, dns_server_t** child);
 
 void push_back_dns_list(list_t** list, dns_server_t* dns_server);
 dns_node_t* get_dns_node_at(list_t** list, int position);
-
+//void delete_at_dns_list(list_t** list, int position);
 
 void print_dns_list(list_t** list);
 
