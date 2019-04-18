@@ -23,7 +23,7 @@ typedef struct address_node_t{
 
 typedef struct dns_server_t{
     struct dns_server_t* parent;
-    struct List* addresses;
+    char** addresses;
     struct List* children;
     /*struct List* users;*/
     int isFault;
@@ -59,4 +59,7 @@ void free_addresses_list(list_t** list);
 void free_users_list(list_t** list);
 void free_children_list(list_t** list);
 */
+
+list_t* initialize_list();
+
 #endif

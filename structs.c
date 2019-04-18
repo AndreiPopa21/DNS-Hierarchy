@@ -1,5 +1,14 @@
 #include "structs.h"
 
+list_t* initialize_list(){
+    list_t* new_list = (list_t*)calloc(1,sizeof(struct List));
+    new_list->head = NULL;
+    new_list->tail = NULL;
+    new_list->nodes_count = 0;
+    return new_list;
+}
+
+
 /*
 users_node_t* initialize_users_node(){
     users_node_t* users_node = (users_node_t*)calloc(1,sizeof(users_node_t));
