@@ -8,7 +8,7 @@ list_t* initialize_list(){
     return new_list;
 }
 
-dns_server_t* initialize_dns_server(){
+dns_server_t* initialize_dns_server(int server_index){
     dns_server_t* new_dns = (dns_server_t*)calloc(1,sizeof(dns_server_t));
     new_dns->parent = NULL;
     new_dns->isFault = 0;
@@ -18,17 +18,19 @@ dns_server_t* initialize_dns_server(){
     new_dns->addresses = (char**)calloc(MAX_ADDR_COUNT,sizeof(char*));
     new_dns->children = initialize_list();
     new_dns->debugCode = 0;
+    new_dns->server_index = server_index;
     return new_dns;
 }
 
-dns_node_t* initialize_dns_node(){
+dns_node_t* initialize_dns_node(dns_server_t** dns_server){
     dns_node_t* new_dns_node = (dns_node_t*)calloc(1,sizeof(dns_node_t));
-    new_dns_node->dns_server = NULL;
+    new_dns_node->dns_server = (*dns_server);
     new_dns_node->next = NULL;
     new_dns_node->prev = NULL;
     return new_dns_node;
 }
 
+/*
 void push_back_dns_child(dns_server_t** parent, dns_server_t** child){
     if(!(*parent))
         return;
@@ -36,22 +38,73 @@ void push_back_dns_child(dns_server_t** parent, dns_server_t** child){
         return;
     (*child) -> parent = (*parent);
     push_back_dns_list(&((*parent)->children),*child);
-}
+}*/
 
 void push_back_dns_list(list_t** list, dns_server_t* dns_server){
     if(!(*list))
         return;
     if(!dns_server)
         return;
-    dns_node_t* new_dns_node = initialize_dns_node();
-    new_dns_node->dns_server = dns_server;
+    dns_node_t* new_dns_node = initialize_dns_node(&dns_server);
+
+    if(!(*list)->head){
+        (*list)->nodes_count = 1;
+        (*list)->head = new_dns_node;
+        (*list)->tail = new_dns_node;
+        return;
+    }
+
     new_dns_node->next = NULL;
     new_dns_node->prev = (*list)->tail;
+    (*list)->tail->next = new_dns_node;
     (*list)->nodes_count += 1;
     (*list)->tail = new_dns_node;
 }
 
 
+void print_dns_list(list_t** list){
+    if(!(*list)){
+        fprintf(stdout,"There is no list to be printed\n");
+        return;
+    }
+
+    if((*list)->head == NULL){
+        fprintf(stdout,"Could not print list, head is NULL\n");
+        return;
+    }
+    if((*list)->tail == NULL){
+        fprintf(stdout,"I won't print list, tail should not be NULL\n");
+        return;
+    }
+
+    if((*list)->nodes_count == 0){
+        fprintf(stdout,"Could not print list, nodes count 0\n");
+        return;
+    }
+    
+    dns_node_t* iterator;
+    fprintf(stdout,"List has %d nodes\n",(*list)->nodes_count);
+    fprintf(stdout,"Printing list: ");
+    for(iterator = (*list)->head; iterator!=NULL; iterator = iterator->next){
+        fprintf(stdout,"%d ", get_dns_node_server_index(&iterator));
+    }
+    fprintf(stdout,"\n");
+
+}
+
+int get_dns_node_server_index(dns_node_t** dns_node){
+    if(!(*dns_node)){
+        fprintf(stdout,"Get server index on empty dns node\n");
+        return -100;
+    }
+
+    if(!(*dns_node)->dns_server){
+        fprintf(stdout,"Get server index, dns node has an empty dns_server ref\n");
+        return -100;
+    }
+
+    return (*dns_node)->dns_server-> server_index;
+}
 
 
 void free_dns_server(dns_server_t** dns){
