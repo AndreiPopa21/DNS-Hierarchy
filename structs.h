@@ -9,8 +9,8 @@
 #include "tasks.h"
 
 typedef struct List{
-    void* head;
-    void* tail;
+    struct dns_server_t* head;
+    struct dns_server_t* tail;
     int nodes_count;
 }list_t;
 
