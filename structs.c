@@ -30,8 +30,8 @@ dns_node_t* initialize_dns_node(dns_server_t** dns_server){
     return new_dns_node;
 }
 
-Hierarchy* initialize_hierarchy(){
-    Hierarchy* dns_hierarchy = (Hierarchy*)calloc(1,sizeof(Hierarchy));
+Hierarchy_t* initialize_hierarchy(){
+    Hierarchy_t* dns_hierarchy = (Hierarchy_t*)calloc(1,sizeof(Hierarchy_t));
     return dns_hierarchy;
 }
 
@@ -317,7 +317,7 @@ void print_dns_server_addresses(dns_server_t** dns_server){
     fprintf(stdout,"NULL\n");
     fprintf(stdout,"%d addresses printed\n",addresses_count);
 }
-void print_temp_struct(temp_dns_struct** tmp){
+void print_temp_struct(temp_dns_struct_t** tmp){
     if(!(*tmp)){
         fprintf(stdout,"Could not prin temp_dns, is NULL\n");
         return;

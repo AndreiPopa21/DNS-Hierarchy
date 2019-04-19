@@ -8,7 +8,7 @@
 #include "utils.h"
 #include "structs.h"
 
-void tree_construction(Hierarchy** hierarchy);
+void tree_construction(Hierarchy_t** hierarchy);
 void hierarchy_initialization();
 void user_queries();
 void fault_tollerance();

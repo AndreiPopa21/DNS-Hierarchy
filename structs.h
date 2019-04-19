@@ -11,6 +11,7 @@
 #define MAX_ADDR_COUNT 20
 
 struct dns_node_t;
+struct Hierarchy;
 
 typedef struct List{
     struct dns_node_t* head;
@@ -42,20 +43,12 @@ typedef struct temp_dns_struct{
     int parent_index;
     int addresses_count;
     char** addresses;
-}temp_dns_struct;
+}temp_dns_struct_t;
 
 typedef struct Hierarchy{
-    dns_server_t* root;
+    struct dns_server_t* root;
     int servers_count;
-}Hierarchy;
-
-/*
-typedef struct address_node_t{
-    char* name;
-    struct address_node_t* next;
-    struct address_node_t* prev;
-}address_node_t;*/
-
+}Hierarchy_t;
 
 
 /*
@@ -87,7 +80,7 @@ void free_children_list(list_t** list);
 list_t* initialize_list();
 dns_server_t* initialize_dns_server(int server_index);
 dns_node_t* initialize_dns_node(dns_server_t** dns_server);
-Hierarchy* initialize_hierarchy();
+Hierarchy_t* initialize_hierarchy();
 
 
 void push_back_dns_child(dns_server_t** parent, dns_server_t** child);
@@ -103,7 +96,7 @@ void print_dns_list_reverse(list_t** list);
 void print_dns_server_childern(dns_server_t** dns_server);
 void print_dns_server_parent_index(dns_server_t** dns_server);
 void print_dns_server_addresses(dns_server_t** dns_server);
-void print_temp_struct(temp_dns_struct** tmp);
+void print_temp_struct(temp_dns_struct_t** tmp);
 
 int get_dns_node_server_index(dns_node_t** dns_node);
 int get_dns_server_parent_index(dns_server_t** dns_server);

@@ -24,17 +24,17 @@ int check_string_duplicate(char** container,int containter_size, char* new_char)
         return 0;
 }
 
-temp_dns_struct* read_from_tree_in(Hierarchy** Hierarchy){
+temp_dns_struct_t* read_from_tree_in(Hierarchy_t** Hierarchy,int* servers_count){
     
     FILE* tree_fh = fopen("tree.in","r");
-    temp_dns_struct* servers = NULL;
+    temp_dns_struct_t* servers = NULL;
     
     if(tree_fh){
         int dns_count = 0;
         fscanf(tree_fh,"%d",&dns_count);
         int i;
-
-        servers = (temp_dns_struct*)calloc(dns_count,sizeof(temp_dns_struct));
+        
+        servers = (temp_dns_struct_t*)calloc(dns_count,sizeof(temp_dns_struct_t));
         for(i = 0; i<dns_count; i++){
             int curr_dns;
             int parent_dns;
