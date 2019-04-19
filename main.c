@@ -29,12 +29,12 @@ void test(){
 
     list_t* list = initialize_list();
     push_back_dns_list(&list,second);
-    //push_back_dns_list(&list,third);
-    //push_back_dns_list(&list,fourth);
+   // push_back_dns_list(&list,third);
+    push_back_dns_list(&list,fourth);
     print_dns_list(&list);
+    //print_dns_list_reverse(&list);
+    delete_at_dns_list(&list,0);
     print_dns_list_reverse(&list);
-    //delete_at_dns_list(&list,1);
-    //print_dns_list(&list);
     //push_back_dns_child(&first,&third);
     //push_back_dns_child(&first,&second);
     //push_back_dns_child(&second,&fourth);

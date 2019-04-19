@@ -139,7 +139,7 @@ void delete_at_dns_list(list_t** list, int position){
         (*list)->nodes_count -= 1;
         return;
     }
-    dns_node_t* iter;
+    dns_node_t* iter = (*list)->head;
     int i;
     for(i = 0; i<position; i++){
         iter = iter->next;
