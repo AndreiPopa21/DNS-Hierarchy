@@ -164,6 +164,30 @@ void delete_at_dns_list(list_t** list, int position){
     (*list)->nodes_count -=1;
 }
 
+void add_address_for_server(dns_server_t** dns_server,char* address){
+    if(!(*dns_server)){
+        fprintf(stdout,"Could not add address on a NULL server\n");
+        return;
+    }
+    if(address[0]=='\0'){
+        fprintf(stdout,"Could not add an empty address\n");
+        return;
+    }
+    if(!(*dns_server)->addresses){
+        fprintf(stdout,"Could not add address, NULL address container on server\n");
+        return;
+    }
+    int curr_addr_count = (*dns_server)->addresses_count;
+    int max_addr_count = (*dns_server)->max_addr_count;
+    if(curr_addr_count >= max_addr_count){
+        int new_max_addr_count = max_addr_count + 20;
+        (*dns_server)->addresses = (char**)realloc((*dns_server)->addresses,new_max_addr_count);
+        (*dns_server)->max_addr_count = new_max_addr_count;
+        fprintf(stdout,"Needed to reallocate addresses space\n");
+    }
+    (*dns_server)->addresses[curr_addr_count] = address;
+    (*dns_server)->addresses_count += 1;
+}
 
 
 
@@ -258,6 +282,30 @@ void print_dns_server_parent_index(dns_server_t** dns_server){
     int dns_server_index = (*dns_server)->server_index;
     fprintf(stdout,"For server %d, parent has %d index\n",dns_server_index,parent_index);
 }
+void print_dns_server_addresses(dns_server_t** dns_server){
+    if(!(dns_server)){
+        fprintf(stdout,"Could not print addresses for a NULL server\n");
+        return;
+    }
+    if(!(*dns_server)->addresses){
+        fprintf(stdout,"Could not print addresses, server has NULL container\n");
+        return;
+    }
+    if((*dns_server)->addresses_count == 0){
+        fprintf(stdout,"Server has no addresses to be printed\n");
+        return;
+    }
+    int i;
+    int dns_server_index = (*dns_server)->server_index;
+    int addresses_count = (*dns_server)->addresses_count;
+    fprintf(stdout,"Printing addresses for %d server: ",dns_server_index);
+    for( i = 0; i < addresses_count; i++){
+        fprintf(stdout,"%s - ",(*dns_server)->addresses[i]);
+    }
+    fprintf(stdout,"NULL\n");
+    fprintf(stdout,"%d addresses printed\n",addresses_count);
+}
+
 int get_dns_node_server_index(dns_node_t** dns_node){
     if(!(*dns_node)){
         fprintf(stdout,"Get server index on empty dns node\n");

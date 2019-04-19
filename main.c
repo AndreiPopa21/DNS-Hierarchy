@@ -30,9 +30,26 @@ void test(){
     push_back_dns_child(&first,&second);
     push_back_dns_child(&second,&fourth);
     push_back_dns_child(&fourth,&third);
-    print_dns_server_childern(&second);
+    //print_dns_server_childern(&second);
     
-    print_dns_server_parent_index(&third);
+    //print_dns_server_parent_index(&third);
+
+    char first_char[64];
+    char second_char[64];
+    char third_char[64];
+
+    scanf("%s",first_char);
+    scanf("%s",second_char);
+    scanf("%s",third_char);
+
+    //printf("%s\n",first_char);
+    //printf("%s\n",second_char);
+    //printf("%s\n",third_char);
+
+    add_address_for_server(&first,first_char);
+    add_address_for_server(&first,second_char);
+    add_address_for_server(&first,third_char);
+    print_dns_server_addresses(&first);
    // delete_at_dns_child(&first,0);
    // delete_at_dns_child(&first,0);
    // delete_at_dns_child(&first,0);

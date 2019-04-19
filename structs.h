@@ -21,10 +21,12 @@ typedef struct List{
 typedef struct dns_server_t{
     int server_index;
     struct dns_server_t* parent;
+    struct List* children;
+    
     char** addresses;
     int max_addr_count;
     int addresses_count;
-    struct List* children;
+    
     int isFault;
     int debugCode;
 }dns_server_t;
@@ -82,12 +84,13 @@ void delete_at_dns_child(dns_server_t** server, int position);
 void push_back_dns_list(list_t** list, dns_server_t* dns_server);
 dns_node_t* get_dns_node_at(list_t** list, int position);
 void delete_at_dns_list(list_t** list, int position);
-
+void add_address_for_server(dns_server_t** dns_server,char* address);
 
 void print_dns_list(list_t** list);
 void print_dns_list_reverse(list_t** list);
 void print_dns_server_childern(dns_server_t** dns_server);
 void print_dns_server_parent_index(dns_server_t** dns_server);
+void print_dns_server_addresses(dns_server_t** dns_server);
 
 int get_dns_node_server_index(dns_node_t** dns_node);
 int get_dns_server_parent_index(dns_server_t** dns_server);
