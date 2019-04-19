@@ -88,6 +88,75 @@ dns_node_t* get_dns_node_at(list_t** list, int position){
     return iterator;
 }
 
+void delete_at_dns_list(list_t** list, int position){
+    if(!(*list)){
+        fprintf(stdout,"You gave me NULL list to delete at\n");
+        return;
+    }
+    int nodes_count = (*list)->nodes_count;
+    if(nodes_count == 0){
+        fprintf(stdout,"Did not delete node at, nodes_count problematic\n");
+        return;
+    }
+    
+    if(position < 0){
+        fprintf(stdout,"Attempted to delete node at a negative position\n");
+        return;
+    }
+    if(position >= nodes_count){
+        fprintf(stdout,"Attempted to delete node at an unoccupied position\n");
+        return;
+    }
+
+    if(!(*list)->head){
+        fprintf(stdout,"Attempted to delete node at position, but head NULL\n");
+        return;
+    }
+    if(nodes_count == 1){
+        free_dns_node(&((*list)->head));
+        (*list)->head = NULL;
+        (*list)->tail = NULL;
+        (*list)->nodes_count = 0;
+        return;
+    }
+
+    if(position == 0){
+        fprintf(stdout,"Deleting head...\n");
+        (*list)->head->next->prev = NULL;
+        dns_node_t* tmp = (*list)->head->next;
+        free_dns_node(&((*list)->head));
+        (*list)->head = tmp;
+        (*list)->nodes_count -= 1;
+        return;
+    }
+
+    if(position == nodes_count -1){
+        fprintf(stdout,"Deleting tail...\n");
+        dns_node_t* tmp = (*list)->tail->prev;
+        (*list)->tail->prev->next = NULL;
+        free_dns_node(&((*list)->tail));
+        (*list)->tail = tmp;
+        (*list)->nodes_count -= 1;
+        return;
+    }
+    dns_node_t* iter;
+    int i;
+    for(i = 0; i<position; i++){
+        iter = iter->next;
+    }
+    dns_node_t* prev = iter->prev;
+    dns_node_t* next = iter->next;
+    prev->next = next;
+    next->prev = prev;
+    free_dns_node(&iter);
+    (*list)->nodes_count -=1;
+}
+
+
+
+
+
+
 void print_dns_list(list_t** list){
     if(!(*list)){
         fprintf(stdout,"There is no list to be printed\n");
@@ -133,7 +202,6 @@ void print_dns_server_childern(dns_server_t** dns_server){
     print_dns_list(&((*dns_server)->children));
 
 }
-
 int get_dns_node_server_index(dns_node_t** dns_node){
     if(!(*dns_node)){
         fprintf(stdout,"Get server index on empty dns node\n");
@@ -147,6 +215,13 @@ int get_dns_node_server_index(dns_node_t** dns_node){
 
     return (*dns_node)->dns_server-> server_index;
 }
+
+
+
+
+
+
+
 
 void free_dns_server(dns_server_t** dns){
     if(!(*dns))
