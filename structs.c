@@ -119,6 +119,21 @@ void print_dns_list(list_t** list){
 
 }
 
+void print_dns_server_childern(dns_server_t** dns_server){
+    if(!(*dns_server)){
+        fprintf(stdout,"You gave me an empty dns to print children for\n");
+        return;
+    }
+    if(!(*dns_server)->children){
+        fprintf(stdout,"The children list for this dns is NULL");
+        return;
+    }
+    int children_count = (*dns_server)->children->nodes_count;
+    fprintf(stdout,"This dns_server has %d children\n",children_count);
+    print_dns_list(&((*dns_server)->children));
+
+}
+
 int get_dns_node_server_index(dns_node_t** dns_node){
     if(!(*dns_node)){
         fprintf(stdout,"Get server index on empty dns node\n");

@@ -12,7 +12,8 @@ void test_get_node_at(list_t** list,int position);
 int main(){
     fprintf(stdout,"Created exe\n");
 
-    tree_construction();
+    //tree_construction();
+    test();
 
     fprintf(stdout,"Finished exe\n");
 

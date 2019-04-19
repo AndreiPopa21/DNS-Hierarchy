@@ -84,6 +84,8 @@ dns_node_t* get_dns_node_at(list_t** list, int position);
 //void delete_at_dns_list(list_t** list, int position);
 
 void print_dns_list(list_t** list);
+void print_dns_server_childern(dns_server_t** dns_server);
+
 
 int get_dns_node_server_index(dns_node_t** dns_node);
 
