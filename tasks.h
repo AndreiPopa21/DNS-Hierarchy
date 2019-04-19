@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "utils.h"
 #include "structs.h"
 
 void tree_construction(Hierarchy_t** hierarchy);

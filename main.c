@@ -32,7 +32,7 @@ void test(){
     push_back_dns_child(&second,&fourth);
     push_back_dns_child(&fourth,&third);
     //print_dns_server_childern(&second);
-    
+
     //print_dns_server_parent_index(&third);
 
     char first_char[64];
@@ -99,4 +99,3 @@ void test_get_node_at(list_t** list,int position){
        // dns->dns_server->server_index = 1212;
     }
 }
-

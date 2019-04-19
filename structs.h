@@ -5,13 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "utils.h"
-#include "tasks.h"
-
 #define MAX_ADDR_COUNT 20
-
-struct dns_node_t;
-struct Hierarchy;
 
 typedef struct List{
     struct dns_node_t* head;
@@ -23,11 +17,11 @@ typedef struct dns_server_t{
     int server_index;
     struct dns_server_t* parent;
     struct List* children;
-    
+
     char** addresses;
     int max_addr_count;
     int addresses_count;
-    
+
     int isFault;
     int debugCode;
 }dns_server_t;
