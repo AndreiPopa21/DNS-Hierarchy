@@ -317,6 +317,23 @@ void print_dns_server_addresses(dns_server_t** dns_server){
     fprintf(stdout,"NULL\n");
     fprintf(stdout,"%d addresses printed\n",addresses_count);
 }
+void print_temp_struct(temp_dns_struct** tmp){
+    if(!(*tmp)){
+        fprintf(stdout,"Could not prin temp_dns, is NULL\n");
+        return;
+    }
+    
+    fprintf(stdout,"Printing temp structure....\n");
+    fprintf(stdout,"Server index: %d\n",(*tmp)->server_index);
+    fprintf(stdout,"Parent index %d\n",(*tmp)->parent_index);
+    fprintf(stdout,"Addresses count: %d\n",(*tmp)->addresses_count);
+    fprintf(stdout,"Addresses: ");
+    int j;
+    for(j=0;j<(*tmp)->addresses_count;j++){
+        fprintf(stdout,"%s - ",(*tmp)->addresses[j]);
+    }
+    fprintf(stdout,"\n");
+}
 
 int get_dns_node_server_index(dns_node_t** dns_node){
     if(!(*dns_node)){

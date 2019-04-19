@@ -12,8 +12,8 @@ void test_get_node_at(list_t** list,int position);
 int main(){
     fprintf(stdout,"Created exe\n");
 
-    
-    tree_construction();
+    Hierarchy* dns_hierarchy = initialize_hierarchy();
+    tree_construction(&dns_hierarchy);
     //test();
 
     fprintf(stdout,"Finished exe\n");
