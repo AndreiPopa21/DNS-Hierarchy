@@ -22,7 +22,7 @@ void tree_construction(){
             int j;
             char addr[256];
             for(j = 0; j < addr_count ; j++){
-                fscanf(tree_fh,"%s",&addr);
+                fscanf(tree_fh,"%s",addr);
                 fprintf(stdout,"%s ",addr);
             }
             fprintf(stdout,"\n");

@@ -30,7 +30,7 @@ dns_node_t* initialize_dns_node(dns_server_t** dns_server){
     return new_dns_node;
 }
 
-/*
+
 void push_back_dns_child(dns_server_t** parent, dns_server_t** child){
     if(!(*parent))
         return;
@@ -38,7 +38,7 @@ void push_back_dns_child(dns_server_t** parent, dns_server_t** child){
         return;
     (*child) -> parent = (*parent);
     push_back_dns_list(&((*parent)->children),*child);
-}*/
+}
 
 void push_back_dns_list(list_t** list, dns_server_t* dns_server){
     if(!(*list))
@@ -113,9 +113,9 @@ void print_dns_list(list_t** list){
     fprintf(stdout,"List has %d nodes\n",(*list)->nodes_count);
     fprintf(stdout,"Printing list: ");
     for(iterator = (*list)->head; iterator!=NULL; iterator = iterator->next){
-        fprintf(stdout,"%d ", get_dns_node_server_index(&iterator));
+        fprintf(stdout,"%d - ", get_dns_node_server_index(&iterator));
     }
-    fprintf(stdout,"\n");
+    fprintf(stdout,"NULL\n");
 
 }
 

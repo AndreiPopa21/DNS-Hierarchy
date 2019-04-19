@@ -27,9 +27,14 @@ void test(){
     dns_server_t* third = initialize_dns_server(3);
     dns_server_t* fourth = initialize_dns_server(4);
 
-    list_t* list = initialize_list();
-    push_back_dns_list(&list,second);
-    push_back_dns_list(&list,third);
+    //list_t* list = initialize_list();
+    //push_back_dns_list(&list,second);
+    //push_back_dns_list(&list,third);
+    push_back_dns_child(&first,&third);
+    push_back_dns_child(&first,&second);
+    push_back_dns_child(&second,&fourth);
+    print_dns_server_childern(&first);
+
 /*
     push_back_dns_list(&list,first);
     push_back_dns_list(&list,third);
@@ -40,7 +45,7 @@ void test(){
     print_dns_list(&list);
 
     free_dns_list(&list);*/
-    print_dns_list(&list);
+    //print_dns_list(&list);
     //free_dns_list(&list);
     //print_dns_list(&list);
 
