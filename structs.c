@@ -187,6 +187,35 @@ void print_dns_list(list_t** list){
     fprintf(stdout,"NULL\n");
 
 }
+void print_dns_list_reverse(list_t** list){
+    if(!(*list)){
+        fprintf(stdout,"There is no list to be printed\n");
+        return;
+    }
+
+    if((*list)->head == NULL){
+        fprintf(stdout,"Could not print list, head is NULL\n");
+        return;
+    }
+    
+    if((*list)->tail == NULL){
+        fprintf(stdout,"I won't print list, tail should not be NULL\n");
+        return;
+    }
+
+    if((*list)->nodes_count == 0){
+        fprintf(stdout,"Could not print list, nodes count 0\n");
+        return;
+    }
+    dns_node_t* iterator;
+    fprintf(stdout,"List has %d nodes\n",(*list)->nodes_count);
+    fprintf(stdout,"Printing list in reverse: ");
+    for(iterator = (*list)->tail; iterator!=NULL; iterator = iterator->prev){
+        fprintf(stdout,"%d - ", get_dns_node_server_index(&iterator));
+    }
+    fprintf(stdout,"NULL\n");
+}
+
 
 void print_dns_server_childern(dns_server_t** dns_server){
     if(!(*dns_server)){
