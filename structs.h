@@ -42,7 +42,12 @@ typedef struct temp_dns_struct{
     int parent_index;
     int addresses_count;
     char** addresses;
-}
+}temp_dns_struct;
+
+typedef struct Hierarchy{
+    dns_server_t* root;
+    int servers_count;
+}Hierarchy;
 
 /*
 typedef struct address_node_t{
