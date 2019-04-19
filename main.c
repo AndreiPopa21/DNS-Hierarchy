@@ -28,9 +28,11 @@ void test(){
     dns_server_t* fourth = initialize_dns_server(4);
 
     push_back_dns_child(&first,&second);
-    push_back_dns_child(&first,&fourth);
-    push_back_dns_child(&first,&third);
-    print_dns_server_childern(&first);
+    push_back_dns_child(&second,&fourth);
+    push_back_dns_child(&fourth,&third);
+    print_dns_server_childern(&second);
+    
+    print_dns_server_parent_index(&third);
    // delete_at_dns_child(&first,0);
    // delete_at_dns_child(&first,0);
    // delete_at_dns_child(&first,0);

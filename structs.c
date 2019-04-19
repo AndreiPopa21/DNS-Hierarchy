@@ -241,6 +241,23 @@ void print_dns_server_childern(dns_server_t** dns_server){
     print_dns_list(&((*dns_server)->children));
 
 }
+void print_dns_server_parent_index(dns_server_t** dns_server){
+    if(!(*dns_server)){
+        fprintf(stdout,"Passed NULL server\n");
+        return;
+    }
+    int parent_index = get_dns_server_parent_index(dns_server);
+    if(parent_index == -200){
+        fprintf(stdout,"Passed NULL server\n");
+        return;
+    }
+    if(parent_index == -100){
+        fprintf(stdout,"Server has a NULL parent\n");
+        return;
+    }
+    int dns_server_index = (*dns_server)->server_index;
+    fprintf(stdout,"For server %d, parent has %d index\n",dns_server_index,parent_index);
+}
 int get_dns_node_server_index(dns_node_t** dns_node){
     if(!(*dns_node)){
         fprintf(stdout,"Get server index on empty dns node\n");
@@ -257,7 +274,7 @@ int get_dns_node_server_index(dns_node_t** dns_node){
 int get_dns_server_parent_index(dns_server_t** dns_server){
     if(!(*dns_server)){
         fprintf(stdout,"Could not get parent index, NULL dns_server\n");
-        return -100;
+        return -200;
     }
     if(!(*dns_server)->parent){
         fprintf(stdout,"Could not get parent index, parent NULL\n");

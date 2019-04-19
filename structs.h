@@ -87,9 +87,10 @@ void delete_at_dns_list(list_t** list, int position);
 void print_dns_list(list_t** list);
 void print_dns_list_reverse(list_t** list);
 void print_dns_server_childern(dns_server_t** dns_server);
-
+void print_dns_server_parent_index(dns_server_t** dns_server);
 
 int get_dns_node_server_index(dns_node_t** dns_node);
+int get_dns_server_parent_index(dns_server_t** dns_server);
 
 void free_dns_server(dns_server_t** dns_server);
 void free_dns_node(dns_node_t** dns_node);
