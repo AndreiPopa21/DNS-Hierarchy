@@ -30,6 +30,10 @@ dns_node_t* initialize_dns_node(dns_server_t** dns_server){
     return new_dns_node;
 }
 
+Hierarchy* initialize_hierarchy(){
+    Hierarchy* dns_hierarchy = (Hierarchy*)calloc(1,sizeof(Hierarchy));
+    return dns_hierarchy;
+}
 
 void push_back_dns_child(dns_server_t** parent, dns_server_t** child){
     if(!(*parent))

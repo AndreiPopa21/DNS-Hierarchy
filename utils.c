@@ -23,3 +23,40 @@ int check_string_duplicate(char** container,int containter_size, char* new_char)
     else
         return 0;
 }
+
+temp_dns_struct* read_from_tree_in(Hierarchy** Hierarchy){
+    
+    FILE* tree_fh = fopen("tree.in","r");
+    temp_dns_struct* servers = NULL;
+    
+    if(tree_fh){
+        int dns_count = 0;
+        fscanf(tree_fh,"%d",&dns_count);
+        int i;
+
+        servers = (temp_dns_struct*)calloc(dns_count,sizeof(temp_dns_struct));
+        for(i = 0; i<dns_count; i++){
+            int curr_dns;
+            int parent_dns;
+            int addr_count;
+            fscanf(tree_fh,"%d",&curr_dns);
+            fscanf(tree_fh,"%d",&parent_dns);
+            fscanf(tree_fh,"%d",&addr_count);
+           
+            servers[i].server_index = curr_dns;
+            servers[i].parent_index = parent_dns;
+            servers[i].addresses_count = addr_count;
+            servers[i].addresses = (char**)calloc(addr_count,sizeof(char*));
+            int j;
+            char addr[256];
+            for(j = 0; j < addr_count ; j++){
+                fscanf(tree_fh,"%s",addr);
+                strcpy(servers[i].addresses[j],addr);
+            }
+        }
+        return servers;
+    }else{
+        fprintf(stdout,"Could not open tree.in for reading\n");
+        return NULL;
+    }
+}

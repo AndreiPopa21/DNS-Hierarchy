@@ -87,6 +87,8 @@ void free_children_list(list_t** list);
 list_t* initialize_list();
 dns_server_t* initialize_dns_server(int server_index);
 dns_node_t* initialize_dns_node(dns_server_t** dns_server);
+Hierarchy* initialize_hierarchy();
+
 
 void push_back_dns_child(dns_server_t** parent, dns_server_t** child);
 void delete_at_dns_child(dns_server_t** server, int position);
