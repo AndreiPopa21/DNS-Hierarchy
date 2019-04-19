@@ -8,4 +8,6 @@
 #include "tasks.h"
 #include "structs.h"
 
+int check_string_duplicate(char** container,int containter_size, char* new_char);
+
 #endif

@@ -177,8 +177,16 @@ void add_address_for_server(dns_server_t** dns_server,char* address){
         fprintf(stdout,"Could not add address, NULL address container on server\n");
         return;
     }
+
     int curr_addr_count = (*dns_server)->addresses_count;
     int max_addr_count = (*dns_server)->max_addr_count;
+    char** container = (*dns_server)->addresses;
+
+    int is_duplicate = check_string_duplicate(container,curr_addr_count,address);
+    if(is_duplicate){
+        return;
+    }
+    
     if(curr_addr_count >= max_addr_count){
         int new_max_addr_count = max_addr_count + 20;
         (*dns_server)->addresses = (char**)realloc((*dns_server)->addresses,new_max_addr_count);
