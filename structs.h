@@ -77,11 +77,12 @@ dns_server_t* initialize_dns_server(int server_index);
 dns_node_t* initialize_dns_node(dns_server_t** dns_server);
 
 void push_back_dns_child(dns_server_t** parent, dns_server_t** child);
-
+void delete_at_dns_child(dns_server_t** server, int position);
 
 void push_back_dns_list(list_t** list, dns_server_t* dns_server);
 dns_node_t* get_dns_node_at(list_t** list, int position);
 void delete_at_dns_list(list_t** list, int position);
+
 
 void print_dns_list(list_t** list);
 void print_dns_list_reverse(list_t** list);

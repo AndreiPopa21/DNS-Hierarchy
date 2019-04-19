@@ -88,6 +88,18 @@ dns_node_t* get_dns_node_at(list_t** list, int position){
     return iterator;
 }
 
+void delete_at_dns_child(dns_server_t** server, int position){
+    if(!(*server)){
+        fprintf(stdout,"Cannot delete child of a NULL server\n");
+        return;
+    }
+    if(!(*server)->children){
+        fprintf(stdout,"Cannot delete child from a NULL children list\n");
+        return;
+    }
+    delete_at_dns_list(&((*server)->children),position);
+}
+
 void delete_at_dns_list(list_t** list, int position){
     if(!(*list)){
         fprintf(stdout,"You gave me NULL list to delete at\n");
@@ -215,8 +227,6 @@ void print_dns_list_reverse(list_t** list){
     }
     fprintf(stdout,"NULL\n");
 }
-
-
 void print_dns_server_childern(dns_server_t** dns_server){
     if(!(*dns_server)){
         fprintf(stdout,"You gave me an empty dns to print children for\n");
@@ -244,7 +254,17 @@ int get_dns_node_server_index(dns_node_t** dns_node){
 
     return (*dns_node)->dns_server-> server_index;
 }
-
+int get_dns_server_parent_index(dns_server_t** dns_server){
+    if(!(*dns_server)){
+        fprintf(stdout,"Could not get parent index, NULL dns_server\n");
+        return -100;
+    }
+    if(!(*dns_server)->parent){
+        fprintf(stdout,"Could not get parent index, parent NULL\n");
+        return -100;
+    }
+    return (*dns_server)->parent->server_index;
+}
 
 
 
