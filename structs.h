@@ -37,7 +37,12 @@ typedef struct dns_node_t{
     struct dns_node_t* prev;
 }dns_node_t;
 
-
+typedef struct temp_dns_struct{
+    int server_index;
+    int parent_index;
+    int addresses_count;
+    char** addresses;
+}
 
 /*
 typedef struct address_node_t{
