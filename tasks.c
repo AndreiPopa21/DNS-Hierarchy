@@ -70,7 +70,14 @@ void tree_construction(Hierarchy_t** hierarchy){
 }
 
 void hierarchy_initialization(Hierarchy_t** hierarchy){
+    
+    fprintf(stdout,"Second task...\n");
     if(!(*hierarchy)){
-        
+        fprintf(stdout,"Passed NULL hierarchy to second task\n");
+        return;
     }
+
+    cluster_children_addresses(NULL,(*hierarchy)->root);
+
+    fprintf(stdout,"Finished second task!\n");
 }

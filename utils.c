@@ -122,3 +122,28 @@ void cluster_children_addresses(dns_server_t** parent, dns_server_t** node){
         add_address_for_server(parent,(*node)->addresses[i]);
     }
 }
+
+void read_dns_servers_recursively(dns_server_t** dns_server,FILE* fh){
+    if(!(*dns_server)){
+        return;
+    }
+    if(!fh){
+        fprintf(stdout,"Cannot write to file for second task\n");
+        return;
+    }
+    fprintf(fh,"%d",(*dns_server)->server_index);
+    int addr_count = (*dns_server)->addresses_count;
+    int i;
+    for ( i=0;i<addr_count;i++){
+        fprintf(fh," %s",(*dns_server)->addresses[i]);
+    }
+    fprintf(fh,"\n");
+    if(hasChildren(dns_server)){
+        dns_node_t* iter = (*dns_server)->children->head;
+        while(iter!=NULL){
+            dns_server_t* child = iter->dns_server;
+            read_dns_servers_recursively(&child,fh);
+            iter = iter->next;
+        }
+    }
+}
