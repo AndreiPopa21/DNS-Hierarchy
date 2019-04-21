@@ -13,7 +13,7 @@ int main(){
     fprintf(stdout,"Created exe\n");
 
     Hierarchy_t* dns_hierarchy = initialize_hierarchy();
-    //tree_construction(&dns_hierarchy);
+    tree_construction(&dns_hierarchy);
     //test();
 
     fprintf(stdout,"Finished exe\n");
@@ -49,10 +49,9 @@ void test(){
 
     add_address_for_server(&first,first_char);
     add_address_for_server(&first,second_char);
-    add_address_for_server(&first,third_char);
+    add_address_for_server(&second,third_char);
     print_dns_server_addresses(&first);
-   // delete_at_dns_child(&first,0);
-   // delete_at_dns_child(&first,0);
+    print_dns_server_parent_index(&second);
    // delete_at_dns_child(&first,0);
     //delete_at_dns_child(&first,0);
     //print_dns_server_childern(&first);
