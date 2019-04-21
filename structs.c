@@ -2,7 +2,7 @@
 #include "structs.h"
 
 list_t* initialize_list(){
-    list_t* new_list = (list_t*)calloc(1,sizeof(struct List));
+    list_t* new_list = (list_t*)malloc(1*sizeof(struct List));
     new_list->head = NULL;
     new_list->tail = NULL;
     new_list->nodes_count = 0;
@@ -10,13 +10,18 @@ list_t* initialize_list(){
 }
 
 dns_server_t* initialize_dns_server(int server_index){
-    dns_server_t* new_dns = (dns_server_t*)calloc(1,sizeof(dns_server_t));
+    dns_server_t* new_dns = (dns_server_t*)malloc(1*sizeof(dns_server_t));
     new_dns->parent = NULL;
     new_dns->isFault = 0;
     new_dns->addresses = NULL;
     new_dns->addresses_count = 0;
     new_dns->max_addr_count = MAX_ADDR_COUNT;
-    new_dns->addresses = (char**)calloc(MAX_ADDR_COUNT,sizeof(char*));
+    new_dns->addresses = (char**)malloc(MAX_ADDR_COUNT*sizeof(char*));
+    int i;
+    for(i=0;i<MAX_ADDR_COUNT;i++){
+        new_dns->addresses[i]=NULL;
+        new_dns->addresses[i]='\0';
+    }
     new_dns->children = initialize_list();
     new_dns->debugCode = 0;
     new_dns->server_index = server_index;
@@ -168,8 +173,11 @@ void delete_at_dns_list(list_t** list, int position){
     free_dns_node(&iter);
     (*list)->nodes_count -=1;
 }
-
+int times = 0;
 void add_address_for_server(dns_server_t** dns_server,char* address){
+    
+    times++;
+    int curr_index = (*dns_server)->server_index;
     if(!(*dns_server)){
         fprintf(stdout,"Could not add address on a NULL server\n");
         return;
@@ -195,11 +203,28 @@ void add_address_for_server(dns_server_t** dns_server,char* address){
     if(curr_addr_count >= max_addr_count){
         int new_max_addr_count = max_addr_count + 20;
         (*dns_server)->addresses = (char**)realloc((*dns_server)->addresses,new_max_addr_count);
+        int i;
+        /*for(i = curr_addr_count;i<new_max_addr_count;i++){
+            (*dns_server)->addresses[i] = NULL;
+            (*dns_server)->addresses[i] = '\0';
+        }*/
+        if((*dns_server)->addresses == NULL){
+            fprintf(stdout,"WTFFFFF\n");
+        }
         (*dns_server)->max_addr_count = new_max_addr_count;
         fprintf(stdout,"Needed to reallocate addresses space\n");
     }
+    
     (*dns_server)->addresses[curr_addr_count] = address;
-    (*dns_server)->addresses_count += 1;
+    
+    fprintf(stdout,"MAX: %d | ",(*dns_server)->max_addr_count);
+    fprintf(stdout,"TIMES: %d | SERVER_INDEX: %d| ADDR: %s| COUNT: %d\n",times,curr_index,address,(*dns_server)->addresses_count);
+
+    curr_addr_count +=1;
+   
+   // (*dns_server)->addresses_count= curr_addr_count;
+
+    fprintf(stdout,"DAAAA\n");
 }
 
 
