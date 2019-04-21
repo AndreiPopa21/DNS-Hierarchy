@@ -14,6 +14,7 @@ int main(){
 
     Hierarchy_t* dns_hierarchy = initialize_hierarchy();
     tree_construction(&dns_hierarchy);
+    //hierarchy_initialization(&dns_hierarchy);
     //test();
 
     fprintf(stdout,"Finished exe\n");

@@ -23,7 +23,7 @@ dns_server_t* initialize_dns_server(int server_index){
         new_dns->addresses[i]='\0';
     }
     new_dns->children = initialize_list();
-    new_dns->debugCode = 0;
+    new_dns->visited = 0;
     new_dns->server_index = server_index;
     return new_dns;
 }
@@ -176,8 +176,9 @@ void delete_at_dns_list(list_t** list, int position){
 int times = 0;
 void add_address_for_server(dns_server_t** dns_server,char* address){
     
-    times++;
-    int curr_index = (*dns_server)->server_index;
+    //times++;
+    //int curr_index = (*dns_server)->server_index;
+            fprintf(stdout,"TESSTTTT: %s\n",address);
     if(!(*dns_server)){
         fprintf(stdout,"Could not add address on a NULL server\n");
         return;
@@ -201,9 +202,9 @@ void add_address_for_server(dns_server_t** dns_server,char* address){
     }
 
     if(curr_addr_count >= max_addr_count){
-        int new_max_addr_count = max_addr_count + 20;
+        int new_max_addr_count = max_addr_count + 100;
         (*dns_server)->addresses = (char**)realloc((*dns_server)->addresses,new_max_addr_count*sizeof(char*));
-        int i;
+        //int i;
         /*for(i = curr_addr_count;i<new_max_addr_count;i++){
             (*dns_server)->addresses[i] = NULL;
             (*dns_server)->addresses[i] = '\0';
