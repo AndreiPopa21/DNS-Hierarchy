@@ -202,7 +202,7 @@ void add_address_for_server(dns_server_t** dns_server,char* address){
 
     if(curr_addr_count >= max_addr_count){
         int new_max_addr_count = max_addr_count + 20;
-        (*dns_server)->addresses = (char**)realloc((*dns_server)->addresses,new_max_addr_count);
+        (*dns_server)->addresses = (char**)realloc((*dns_server)->addresses,new_max_addr_count*sizeof(char*));
         int i;
         /*for(i = curr_addr_count;i<new_max_addr_count;i++){
             (*dns_server)->addresses[i] = NULL;
@@ -215,16 +215,17 @@ void add_address_for_server(dns_server_t** dns_server,char* address){
         fprintf(stdout,"Needed to reallocate addresses space\n");
     }
     
+   //fprintf(stdout,"MAX: %d | ",(*dns_server)->max_addr_count);
+   //fprintf(stdout,"TIMES: %d | SERVER_INDEX: %d| ADDR: %s| COUNT: %d\n",times,curr_index,address,(*dns_server)->addresses_count);
+
+
     (*dns_server)->addresses[curr_addr_count] = address;
     
-    fprintf(stdout,"MAX: %d | ",(*dns_server)->max_addr_count);
-    fprintf(stdout,"TIMES: %d | SERVER_INDEX: %d| ADDR: %s| COUNT: %d\n",times,curr_index,address,(*dns_server)->addresses_count);
-
     curr_addr_count +=1;
    
-   // (*dns_server)->addresses_count= curr_addr_count;
+   (*dns_server)->addresses_count= curr_addr_count;
 
-    fprintf(stdout,"DAAAA\n");
+    //fprintf(stdout,"DAAAA\n");
 }
 
 
@@ -597,26 +598,6 @@ void free_addresses_list(list_t** list){
     free(*list);
 }
 
-void free_users_list(list_t** list){
-    if(!(*list)){
-        fprintf(stdout,"Attempted to free null list\n");
-        return;
-    }
-    users_node_t* head = (*list)->head;
-    users_node_t* iterator;
-
-    for(iterator = head; iterator!=NULL;){
-        users_node_t* tmp = iterator;
-        iterator = iterator->next;
-        free_users_node(&tmp);
-    }
-
-    (*list)->head = NULL;
-    (*list)->tail = NULL;
-    (*list)->nodes_count = 0;
-
-    free(*list);
-}
 
 void free_children_list(list_t** list){
     if(!(*list)){

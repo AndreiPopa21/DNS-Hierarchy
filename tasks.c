@@ -60,11 +60,11 @@ void tree_construction(Hierarchy_t** hierarchy){
             fprintf(stdout,"Server %d does not have children\n",server_array[i]->server_index);
         }
     }*/
-    /*FILE* fh = fopen("tree.out","w+");
+    FILE* fh = fopen("tree.out","w+");
     read_children_index_recursively(&(*hierarchy)->root,fh);
     fclose(fh);
 
     free_temp_dns_array(&temp_dns,servers_count);
-    free(server_array);*/
+    free(server_array);
     fprintf(stdout,"Finished first task!\n");
 }

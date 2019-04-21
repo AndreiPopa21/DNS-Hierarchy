@@ -48,12 +48,6 @@ temp_dns_struct_t** read_from_tree_in(Hierarchy_t** hierarchy,int* servers_count
             fscanf(tree_fh,"%d",&parent_dns);
             fscanf(tree_fh,"%d",&addr_count);
 
-            /*fprintf(stdout,"%d ",curr_dns);
-            fprintf(stdout,"%d ",parent_dns);
-            fprintf(stdout,"%d ",addr_count);*/
-            //servers[i].server_index = curr_dns;
-            //servers[i].parent_index = parent_dns;
-            //servers[i].addresses_count = addr_count;
             servers[i]->server_index = curr_dns;
             servers[i]->parent_index = parent_dns;
             servers[i]->addresses_count = addr_count;
@@ -65,7 +59,7 @@ temp_dns_struct_t** read_from_tree_in(Hierarchy_t** hierarchy,int* servers_count
             for(j = 0; j < addr_count ; j++){
                 fscanf(tree_fh,"%s",addr);
                 //fprintf(stdout,"%s ",addr);
-                servers[i]->addresses[j]=(char*)calloc(1,sizeof(char));
+                servers[i]->addresses[j]=(char*)calloc(strlen(addr)+1,sizeof(char));
                 strcpy(servers[i]->addresses[j],addr);
             }
             //fprintf(stdout,"\n");
@@ -84,7 +78,7 @@ void read_children_index_recursively(dns_server_t** dns_server,FILE* fh){
 
     fprintf(fh,"%d",(*dns_server)->server_index);
     if(hasChildren(dns_server)){
-        //printf("ya ");
+
         int i;
         int children_count = (*dns_server)->children->nodes_count;
         dns_node_t* iter = (*dns_server)->children->head;
@@ -102,7 +96,6 @@ void read_children_index_recursively(dns_server_t** dns_server,FILE* fh){
         }
 
     }else{
-        //printf("no ");
         fprintf(fh,"\n");
     }
 }
