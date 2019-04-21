@@ -103,7 +103,7 @@ void cluster_children_addresses(dns_server_t** parent, dns_server_t** node){
     if(!(*node)){
         return;
     }
-    fprintf(stdout,"LALA: %d\n",(*node)->server_index);
+    //fprintf(stdout,"LALA: %d\n",(*node)->server_index);
     if(hasChildren(node)){
         //int children_count = (*node)->children->nodes_count;
         dns_node_t* iter = (*node)->children->head;

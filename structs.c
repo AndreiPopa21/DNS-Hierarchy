@@ -178,7 +178,7 @@ void add_address_for_server(dns_server_t** dns_server,char* address){
     
     //times++;
     //int curr_index = (*dns_server)->server_index;
-            fprintf(stdout,"TESSTTTT: %s\n",address);
+            //fprintf(stdout,"TESSTTTT: %s\n",address);
     if(!(*dns_server)){
         fprintf(stdout,"Could not add address on a NULL server\n");
         return;
@@ -473,12 +473,12 @@ void free_temp_dns_array(temp_dns_struct_t*** temp_array,int size){
     for(i = 0; i < size; i++){
         (*temp_array)[i]->server_index = 0;
         (*temp_array)[i]->parent_index = 0;
-        int addr_count = (*temp_array)[i]->addresses_count;
+        //int addr_count = (*temp_array)[i]->addresses_count;
         (*temp_array)[i]->addresses_count = 0;
-        int j;
-        for( j=0 ; j<addr_count; j++){
+       // int j;
+        /*for( j=0 ; j<addr_count; j++){
             free((*temp_array)[i]->addresses[j]);
-        }
+        }*/
         free((*temp_array)[i]->addresses);
         free((*temp_array)[i]);
     }

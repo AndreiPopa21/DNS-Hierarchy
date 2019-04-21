@@ -47,6 +47,8 @@ void tree_construction(Hierarchy_t** hierarchy){
     for(i = 0; i<servers_count; i++){
         int addr_count = temp_dns[i]->addresses_count;
         for (j = 0; j<addr_count ;j++){
+            //char* address = (char*)malloc(100*sizeof(char))
+            //strcpy(address,temp_dns[i]->addresses[j]);
             add_address_for_server(&server_array[i],temp_dns[i]->addresses[j]);
         }
     }
@@ -64,25 +66,24 @@ void tree_construction(Hierarchy_t** hierarchy){
     FILE* fh = fopen("tree.out","w+");
     read_children_index_recursively(&(*hierarchy)->root,fh);
 
-
         //dns_server_t* root = (*hierarchy)->root;
           //  cluster_children_addresses(NULL,&root);
 
         //read_dns_servers_recursively(&root,fh);
 
     fclose(fh);
-
     free_temp_dns_array(&temp_dns,servers_count);
+
     free(server_array);
     fprintf(stdout,"Finished first task!\n");
 
-    fh = fopen("hierarchy.out","w+");
+   /* fh = fopen("hierarchy.out","w+");
 
     dns_server_t* root = (*hierarchy)->root;
     cluster_children_addresses(NULL,&root);
     read_dns_servers_recursively(&root,fh);
     fclose(fh);
-    fprintf(stdout,"Finished second task!\n");
+    fprintf(stdout,"Finished second task!\n");*/
 
     //hierarchy_initialization(hierarchy);
 }
