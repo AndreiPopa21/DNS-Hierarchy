@@ -12,3 +12,19 @@ push_m:
 
 leaks: tema2
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose ./tema2
+
+files: tree.in tree.out queries.in queries.out hierarchy.out users.in
+
+tree.in:
+	touch tree.in
+	cat tree_in_input > tree.in
+tree.out:
+	touch tree.out
+hierarchy.out:
+	touch hierarchy.out
+users.in:
+	touch users.in
+queries.in:
+	touch queries.in
+queries.out:
+	touch queries.out
