@@ -7,7 +7,7 @@ int check_string_duplicate(char** container,int containter_size, char* new_char)
         return 0;
     }
     if(containter_size == 0){
-        fprintf(stdout, "Container has no addresses\n");
+        //fprintf(stdout, "Container has no addresses\n");
         return 0;
     }
     int is_duplicate = 0;
@@ -33,7 +33,7 @@ temp_dns_struct_t** read_from_tree_in(Hierarchy_t** hierarchy,int* servers_count
     if(tree_fh){
         int dns_count = 0;
         fscanf(tree_fh,"%d",&dns_count);
-        fprintf(stdout,"%d\n",dns_count);
+        //fprintf(stdout,"%d\n",dns_count);
         int i;
         *servers_count = dns_count;
         servers = (temp_dns_struct_t**)malloc(dns_count*sizeof(temp_dns_struct_t*));
@@ -48,9 +48,9 @@ temp_dns_struct_t** read_from_tree_in(Hierarchy_t** hierarchy,int* servers_count
             fscanf(tree_fh,"%d",&parent_dns);
             fscanf(tree_fh,"%d",&addr_count);
 
-            fprintf(stdout,"%d ",curr_dns);
+            /*fprintf(stdout,"%d ",curr_dns);
             fprintf(stdout,"%d ",parent_dns);
-            fprintf(stdout,"%d ",addr_count);
+            fprintf(stdout,"%d ",addr_count);*/
             //servers[i].server_index = curr_dns;
             //servers[i].parent_index = parent_dns;
             //servers[i].addresses_count = addr_count;
@@ -64,15 +64,45 @@ temp_dns_struct_t** read_from_tree_in(Hierarchy_t** hierarchy,int* servers_count
             char addr[256];
             for(j = 0; j < addr_count ; j++){
                 fscanf(tree_fh,"%s",addr);
-                fprintf(stdout,"%s ",addr);
+                //fprintf(stdout,"%s ",addr);
                 servers[i]->addresses[j]=(char*)calloc(1,sizeof(char));
                 strcpy(servers[i]->addresses[j],addr);
             }
-            fprintf(stdout,"\n");
+            //fprintf(stdout,"\n");
         }
         return servers;
     }else{
         fprintf(stdout,"Could not open tree.in for reading\n");
         return NULL;
+    }
+}
+
+void read_children_index_recursively(dns_server_t** dns_server,FILE* fh){
+    if(!(*dns_server)){
+        return;
+    }
+
+    fprintf(fh,"%d",(*dns_server)->server_index);
+    if(hasChildren(dns_server)){
+        //printf("ya ");
+        int i;
+        int children_count = (*dns_server)->children->nodes_count;
+        dns_node_t* iter = (*dns_server)->children->head;
+        
+        while(iter){
+            dns_server_t* child = iter->dns_server;
+            iter = iter->next;
+            fprintf(fh," %d",child->server_index);
+        }
+        fprintf(fh,"\n");
+        iter = (*dns_server)->children->head;
+        while(iter){
+            read_children_index_recursively(&(iter->dns_server),fh);
+            iter = iter->next;
+        }
+
+    }else{
+        //printf("no ");
+        fprintf(fh,"\n");
     }
 }
