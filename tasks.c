@@ -68,3 +68,9 @@ void tree_construction(Hierarchy_t** hierarchy){
     free(server_array);
     fprintf(stdout,"Finished first task!\n");
 }
+
+void hierarchy_initialization(Hierarchy_t** hierarchy){
+    if(!(*hierarchy)){
+        
+    }
+}

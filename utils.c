@@ -99,3 +99,26 @@ void read_children_index_recursively(dns_server_t** dns_server,FILE* fh){
         fprintf(fh,"\n");
     }
 }
+
+void cluster_children_addresses(dns_server_t** parent, dns_server_t** node){
+    if(!(*node)){
+        return;
+    }
+    if(hasChildren(node)){
+        int children_count = (*node)->children->nodes_count;
+        dns_node_t* iter = (*node)->children->head;
+        while(iter!=NULL){
+            dns_server_t* child = iter->dns_server;
+            cluster_children_addresses(node,&child);
+            iter = iter->next;
+        }
+    }
+    if(!(*parent)){
+        return;
+    }
+    int addr_count = (*node)->addresses_count;
+    int i;
+    for( i = 0; i < addr_count; i++){
+        add_address_for_server(parent,(*node)->addresses[i]);
+    }
+}
