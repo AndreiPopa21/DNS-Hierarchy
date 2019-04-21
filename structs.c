@@ -9,6 +9,18 @@ list_t* initialize_list(){
     return new_list;
 }
 
+user_list_t* initialize_user_list(int users_count){
+    if(!users_count){
+        fprintf(stdout,"No users for this list\n");
+        return;
+    }
+    user_list_t* user_list = (user_list_t*)calloc(1,sizeof(user_list_t));
+    user_list->head = NULL;
+    user_list->tail = NULL;
+    user_list->users_count = users_count;
+    return user_list;
+}
+
 dns_server_t* initialize_dns_server(int server_index){
     dns_server_t* new_dns = (dns_server_t*)malloc(1*sizeof(dns_server_t));
     new_dns->parent = NULL;

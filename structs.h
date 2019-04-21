@@ -44,6 +44,16 @@ typedef struct Hierarchy{
     int servers_count;
 }Hierarchy_t;
 
+typedef struct user_node_t{
+    int user_index;
+    struct dns_server_t* server;
+}user_node_t;
+
+typedef struct UserList{
+    int users_count;
+    struct user_node_t* head;
+    struct user_node_t* tail;
+}user_list_t;
 
 /*
 typedef struct users_node_t{
@@ -75,6 +85,7 @@ list_t* initialize_list();
 dns_server_t* initialize_dns_server(int server_index);
 dns_node_t* initialize_dns_node(dns_server_t** dns_server);
 Hierarchy_t* initialize_hierarchy();
+user_list_t* initialize_user_list(int users_count);
 
 
 void push_back_dns_child(dns_server_t** parent, dns_server_t** child);
