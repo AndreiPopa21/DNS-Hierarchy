@@ -420,7 +420,7 @@ void free_dns_list(list_t** list){
     free((*list));
 }
 
-void free_dns_array(temp_dns_struct_t*** temp_array,int size){
+void free_temp_dns_array(temp_dns_struct_t*** temp_array,int size){
     if(!(*temp_array)){
         fprintf(stdout,"Temp array is NULL, unable to free\n");
         return;
