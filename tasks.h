@@ -9,7 +9,7 @@
 
 void tree_construction(Hierarchy_t** hierarchy);
 void hierarchy_initialization(Hierarchy_t** hierarchy);
-void user_queries();
+void user_queries(Hierarchy_t** hierarchy);
 void fault_tollerance();
 
 #endif

@@ -13,9 +13,16 @@ int main(){
     fprintf(stdout,"Created exe\n");
 
     Hierarchy_t* dns_hierarchy = initialize_hierarchy();
-    tree_construction(&dns_hierarchy);
-    hierarchy_initialization(&dns_hierarchy);
+    //tree_construction(&dns_hierarchy);
+    //hierarchy_initialization(&dns_hierarchy);
     //test();
+    user_list_t* users_list = initialize_user_list(5);
+
+
+
+    
+    free_users_list(&users_list);
+    free_hierarchy(&dns_hierarchy);
 
     fprintf(stdout,"Finished exe\n");
 

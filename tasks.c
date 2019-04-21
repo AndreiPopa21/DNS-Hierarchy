@@ -103,3 +103,12 @@ void hierarchy_initialization(Hierarchy_t** hierarchy){
     fclose(fh);
     fprintf(stdout,"Finished second task!\n");
 }
+
+void user_queries(Hierarchy_t** hierarchy){
+    fprintf(stdout,"Third task...\n");
+    if(!(*hierarchy)){
+        fprintf(stdout,"Passed NULL hierarchy to third task\n");
+        return;
+    }
+    fprintf(stdout,"Finished third task\n");
+}

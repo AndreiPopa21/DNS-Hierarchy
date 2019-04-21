@@ -10,9 +10,9 @@ list_t* initialize_list(){
 }
 
 user_list_t* initialize_user_list(int users_count){
-    if(!users_count){
+    if(users_count<=0){
         fprintf(stdout,"No users for this list\n");
-        return;
+        return NULL;
     }
     user_list_t* user_list = (user_list_t*)calloc(1,sizeof(user_list_t));
     user_list->head = NULL;
@@ -497,138 +497,24 @@ void free_temp_dns_array(temp_dns_struct_t*** temp_array,int size){
     free((*temp_array));
 }
 
-/*
-users_node_t* initialize_users_node(){
-    users_node_t* users_node = (users_node_t*)calloc(1,sizeof(users_node_t));
-    users_node->user_index = -1;
-    users_node->dns_server = NULL;
-    users_node->next = NULL;
-    users_node->prev = NULL;
-    return users_node;
-}
-
-dns_node_t* initialize_dns_node(){
-    dns_node_t* dns_node = (dns_node_t*)calloc(1,sizeof(dns_node_t));
-    dns_node->dns_server = NULL;
-    dns_node->next = NULL;
-    dns_node->prev = NULL;
-    return dns_node;
-}
-
-address_node_t* initialize_address_node(){
-    address_node_t* address_node = (address_node_t*)calloc(1,sizeof(address_node_t));
-    address_node->name = NULL;
-    address_node->next = NULL;
-    address_node->prev = NULL;
-    return address_node;
-}
-
-list_t* initialize_list(){
-    list_t* new_list = (list_t*)calloc(1,sizeof(list_t));
-    new_list->head = NULL;
-    new_list->nodes_count = 0;
-    new_list->tail = NULL;
-    return new_list;
-}
-
-dns_server_t* initialize_dns_server(){
-    dns_server_t* new_dns_server = (dns_server_t*)calloc(1,sizeof(dns_server_t));
-    new_dns_server->parent = NULL;
-    new_dns_server->addresses = NULL;
-    new_dns_server->children = NULL;
-    new_dns_server->users = NULL;
-    new_dns_server->isFault = 0;
-    return new_dns_server;
-}
-
-void free_users_node(users_node_t** users_node){
-    if(!(*users_node)){
-        fprintf(stdout,"Attempted to free null users node\n");
+void free_users_list(user_list_t** users_list){
+    if(!(*users_list)){
+        fprintf(stdout,"No users list to be freed\n");
         return;
     }
-    (*users_node)->next = NULL;
-    (*users_node)->prev = NULL;
-    (*users_node)->dns_server = NULL;
-
-    free(*users_node);
+    user_node_t* iter = (*users_list)->head;
+    while(iter){
+        user_node_t* tmp = iter;
+        free(tmp);
+        iter = iter->next;
+    }
+    free(*users_list);
 }
 
-void free_address_node(address_node_t** address_node){
-    if(!(*address_node)){
-        fprintf(stdout,"Attempted to free null address node\n");
+void free_hierarchy(Hierarchy_t** hierarchy){
+    if(!(*hierarchy)){
+        fprintf(stdout,"No hierarchy to be freed\n");
         return;
     }
-    if(!(*address_node)->name){
-        free((*address_node)->name);
-    }
-    (*address_node)->next = NULL;
-    (*address_node)->prev = NULL;
-    free(*address_node);
+    free(*hierarchy);
 }
-
-void free_dns_node(dns_node_t** dns_node){
-    if(!(*dns_node)){
-        fprintf(stdout,"Attempted to free null dns node\n");
-        return;
-    }
-    (*dns_node)->dns_server = NULL;
-    (*dns_node)->next = NULL;
-    (*dns_node)->prev = NULL;
-    free(*dns_node);
-}
-
-void free_dns_server(dns_server_t** dns_server){
-    if(!(*dns_server)){
-        fprintf(stdout,"Attempted to free null dns_server\n");
-        return;
-    }
-    (*dns_server)->isFault = 0;
-    (*dns_server)->parent = NULL;
-    free_addresses_list(&((*dns_server)->addresses));
-    free_users_list(&((*dns_server)->users));
-    free_children_list(&((*dns_server)->children));
-    free(*dns_server);
-}
-
-void free_addresses_list(list_t** list){
-    if(!(*list)){
-        fprintf(stdout,"Attempted to free null list\n");
-        return;
-    }
-    address_node_t* head = (*list)->head;
-    address_node_t* iterator;
-
-    for(iterator = head; iterator!=NULL;){
-        address_node_t* tmp = iterator;
-        iterator = iterator->next;
-        free_address_node(&tmp);
-    }
-
-    (*list)->head = NULL;
-    (*list)->tail = NULL;
-    (*list)->nodes_count = 0;
-
-    free(*list);
-}
-
-
-void free_children_list(list_t** list){
-    if(!(*list)){
-        fprintf(stdout,"Attempted to free null list\n");
-        return;
-    }
-    dns_node_t* head = (*list)->head;
-    dns_node_t* iterator;
-
-    for(iterator = head; iterator!=NULL;){
-        dns_node_t* tmp = iterator;
-        iterator = iterator->next;
-        free_dns_node(&tmp);
-    }
-
-    (*list)->head = NULL;
-    (*list)->tail = NULL;
-    (*list)->nodes_count = 0;
-
-    free(*list);
-}*/

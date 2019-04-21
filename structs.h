@@ -47,6 +47,8 @@ typedef struct Hierarchy{
 typedef struct user_node_t{
     int user_index;
     struct dns_server_t* server;
+    struct user_node_t* next;
+    struct user_node_t* prev;
 }user_node_t;
 
 typedef struct UserList{
@@ -62,23 +64,6 @@ typedef struct users_node_t{
     struct users_node_t* next;
     struct users_node_t* prev;
 }users_node_t;
-
-
-
-
-users_node_t* initialize_users_node();
-dns_node_t* initialize_dns_node();
-address_node_t* initialize_address_node();
-list_t* initialize_list();
-dns_server_t* initialize_dns_server();
-
-void free_users_node(users_node_t** users_node);
-void free_address_node(address_node_t** address_node);
-void free_dns_node(dns_node_t** dns_node);
-void free_dns_server(dns_server_t** dns_server);
-void free_addresses_list(list_t** list);
-void free_users_list(list_t** list);
-void free_children_list(list_t** list);
 */
 
 list_t* initialize_list();
@@ -111,5 +96,7 @@ void free_dns_server(dns_server_t** dns_server);
 void free_dns_node(dns_node_t** dns_node);
 void free_dns_list(list_t** list);
 void free_temp_dns_array(temp_dns_struct_t*** temp_array, int size);
+void free_users_list(user_list_t** users_list);
+void free_hierarchy(Hierarchy_t** hierarchy);
 
 #endif
