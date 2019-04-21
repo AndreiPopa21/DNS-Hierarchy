@@ -319,7 +319,7 @@ void print_dns_server_addresses(dns_server_t** dns_server){
     fprintf(stdout,"%d addresses printed\n",addresses_count);
 }
 void print_temp_struct(temp_dns_struct_t** tmp){
-    if(!tmp){
+    if(!(*tmp)){
         fprintf(stdout,"Could not prin temp_dns, is NULL\n");
         return;
     }
@@ -418,6 +418,27 @@ void free_dns_list(list_t** list){
     (*list)->head = NULL;
     (*list)->tail = NULL;
     free((*list));
+}
+
+void free_dns_array(temp_dns_struct_t*** temp_array,int size){
+    if(!(*temp_array)){
+        fprintf(stdout,"Temp array is NULL, unable to free\n");
+        return;
+    }
+    int i;
+    for(i = 0; i < size; i++){
+        (*temp_array)[i]->server_index = 0;
+        (*temp_array)[i]->parent_index = 0;
+        int addr_count = (*temp_array)[i]->addresses_count;
+        (*temp_array)[i]->addresses_count = 0;
+        int j;
+        for( j=0 ; j<addr_count; j++){
+            free((*temp_array)[i]->addresses[j]);
+        }
+        free((*temp_array)[i]->addresses);
+        free((*temp_array)[i]);
+    }
+    free((*temp_array));
 }
 
 /*

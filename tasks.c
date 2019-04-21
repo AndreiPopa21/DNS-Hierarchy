@@ -9,6 +9,6 @@ void tree_construction(Hierarchy_t** hierarchy){
         print_temp_struct(&temp_dns[i]);
     }
     //fprintf(stdout,"%d\n",temp_dns[0]->addresses_count);
-
+    free_dns_array(&temp_dns,servers_count);
     fprintf(stdout,"Finished first task!\n");
 }

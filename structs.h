@@ -98,5 +98,6 @@ int get_dns_server_parent_index(dns_server_t** dns_server);
 void free_dns_server(dns_server_t** dns_server);
 void free_dns_node(dns_node_t** dns_node);
 void free_dns_list(list_t** list);
+void free_dns_array(temp_dns_struct_t*** temp_array, int size);
 
 #endif
