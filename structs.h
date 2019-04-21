@@ -94,6 +94,8 @@ void print_temp_struct(temp_dns_struct_t** tmp);
 
 int get_dns_node_server_index(dns_node_t** dns_node);
 int get_dns_server_parent_index(dns_server_t** dns_server);
+int hasChildren(dns_server_t** dns_server);
+
 
 void free_dns_server(dns_server_t** dns_server);
 void free_dns_node(dns_node_t** dns_node);

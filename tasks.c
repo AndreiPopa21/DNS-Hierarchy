@@ -11,10 +11,10 @@ void tree_construction(Hierarchy_t** hierarchy){
 
     int servers_count = 0;
     temp_dns_struct_t** temp_dns = read_from_tree_in(hierarchy,&servers_count);
-    int i; 
+    int i; /*
     for(i = 0 ; i < servers_count; i++){
         print_temp_struct(&temp_dns[i]);
-    }
+    }/*/
 
     (*hierarchy)->servers_count = servers_count;
 
@@ -53,7 +53,12 @@ void tree_construction(Hierarchy_t** hierarchy){
 
     fprintf(stdout,"----------------------------------\n");
     for(i = 0; i<servers_count; i++){
-        print_dns_server_childern(&server_array[i]);
+       // print_dns_server_addresses(&server_array[i]);
+        if(hasChildren(&server_array[i])){
+            fprintf(stdout,"Server %d has children\n",server_array[i]->server_index);
+        }else{
+            fprintf(stdout,"Server %d does not have children\n",server_array[i]->server_index);
+        }
     }
 
     free_temp_dns_array(&temp_dns,servers_count);

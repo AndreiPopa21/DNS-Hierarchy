@@ -274,7 +274,7 @@ void print_dns_server_childern(dns_server_t** dns_server){
         return;
     }
     int children_count = (*dns_server)->children->nodes_count;
-    fprintf(stdout,"This dns_server has %d children\n",children_count);
+    fprintf(stdout,"Dns_server %d has %d children\n",(*dns_server)->server_index,children_count);
     print_dns_list(&((*dns_server)->children));
 
 }
@@ -361,6 +361,23 @@ int get_dns_server_parent_index(dns_server_t** dns_server){
     return (*dns_server)->parent->server_index;
 }
 
+int hasChildren(dns_server_t** dns_server){
+    if(!(*dns_server)){
+        fprintf(stdout,"Unable to check existence of children on NULL\n");
+        return 0;
+    }
+    list_t* children_list = (*dns_server)->children;
+    if(!children_list){
+        fprintf(stdout,"Children list NULL\n");
+        return 0;
+    }
+    int children_count = (*dns_server)->children->nodes_count;
+    if(children_count > 0){
+        return 1;
+    }else{
+        return 0;
+    }
+}
 
 
 
