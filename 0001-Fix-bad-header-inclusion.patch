@@ -1,0 +1,527 @@
+From 11928a3c58e484e35f58bd9381289cc96fa10047 Mon Sep 17 00:00:00 2001
+From: Razvan Neacsu <razvan.neacsu5@gmail.com>
+Date: Fri, 19 Apr 2019 23:08:03 +0300
+Subject: [PATCH] Fix bad header inclusion
+
+---
+ main.c    |   3 +--
+ structs.c |  27 ++++++++++++++-------------
+ structs.h |  12 +++---------
+ tasks.h   |   3 +--
+ tema2     | Bin 34048 -> 0 bytes
+ utils.c   |  11 ++++++-----
+ utils.h   |   5 +----
+ 7 files changed, 26 insertions(+), 35 deletions(-)
+ delete mode 100755 tema2
+
+diff --git a/main.c b/main.c
+index ddef126..fce9ff5 100644
+--- a/main.c
++++ b/main.c
+@@ -32,7 +32,7 @@ void test(){
+     push_back_dns_child(&second,&fourth);
+     push_back_dns_child(&fourth,&third);
+     //print_dns_server_childern(&second);
+-    
++
+     //print_dns_server_parent_index(&third);
+ 
+     char first_char[64];
+@@ -99,4 +99,3 @@ void test_get_node_at(list_t** list,int position){
+        // dns->dns_server->server_index = 1212;
+     }
+ }
+-
+diff --git a/structs.c b/structs.c
+index e01fb0a..c74d4d1 100644
+--- a/structs.c
++++ b/structs.c
+@@ -1,3 +1,4 @@
++#include "utils.h"
+ #include "structs.h"
+ 
+ list_t* initialize_list(){
+@@ -114,7 +115,7 @@ void delete_at_dns_list(list_t** list, int position){
+         fprintf(stdout,"Did not delete node at, nodes_count problematic\n");
+         return;
+     }
+-    
++
+     if(position < 0){
+         fprintf(stdout,"Attempted to delete node at a negative position\n");
+         return;
+@@ -190,7 +191,7 @@ void add_address_for_server(dns_server_t** dns_server,char* address){
+     if(is_duplicate){
+         return;
+     }
+-    
++
+     if(curr_addr_count >= max_addr_count){
+         int new_max_addr_count = max_addr_count + 20;
+         (*dns_server)->addresses = (char**)realloc((*dns_server)->addresses,new_max_addr_count);
+@@ -215,7 +216,7 @@ void print_dns_list(list_t** list){
+         fprintf(stdout,"Could not print list, head is NULL\n");
+         return;
+     }
+-    
++
+     if((*list)->tail == NULL){
+         fprintf(stdout,"I won't print list, tail should not be NULL\n");
+         return;
+@@ -225,7 +226,7 @@ void print_dns_list(list_t** list){
+         fprintf(stdout,"Could not print list, nodes count 0\n");
+         return;
+     }
+-    
++
+     dns_node_t* iterator;
+     fprintf(stdout,"List has %d nodes\n",(*list)->nodes_count);
+     fprintf(stdout,"Printing list: ");
+@@ -245,7 +246,7 @@ void print_dns_list_reverse(list_t** list){
+         fprintf(stdout,"Could not print list, head is NULL\n");
+         return;
+     }
+-    
++
+     if((*list)->tail == NULL){
+         fprintf(stdout,"I won't print list, tail should not be NULL\n");
+         return;
+@@ -322,7 +323,7 @@ void print_temp_struct(temp_dns_struct_t** tmp){
+         fprintf(stdout,"Could not prin temp_dns, is NULL\n");
+         return;
+     }
+-    
++
+     fprintf(stdout,"Printing temp structure....\n");
+     fprintf(stdout,"Server index: %d\n",(*tmp)->server_index);
+     fprintf(stdout,"Parent index %d\n",(*tmp)->parent_index);
+@@ -388,7 +389,7 @@ void free_dns_server(dns_server_t** dns){
+     }
+     free((*dns)->children);*/
+     free_dns_list(&((*dns)->children));
+-    
++
+     free((*dns));
+ }
+ 
+@@ -405,7 +406,7 @@ void free_dns_node(dns_node_t** dns_node){
+ void free_dns_list(list_t** list){
+     if(!(*list))
+         return;
+-    
++
+     dns_node_t* tmp;
+     while(!(*list)->head){
+         tmp = (*list)->head;
+@@ -512,7 +513,7 @@ void free_dns_server(dns_server_t** dns_server){
+     free(*dns_server);
+ }
+ 
+-void free_addresses_list(list_t** list){    
++void free_addresses_list(list_t** list){
+     if(!(*list)){
+         fprintf(stdout,"Attempted to free null list\n");
+         return;
+@@ -525,7 +526,7 @@ void free_addresses_list(list_t** list){
+         iterator = iterator->next;
+         free_address_node(&tmp);
+     }
+-    
++
+     (*list)->head = NULL;
+     (*list)->tail = NULL;
+     (*list)->nodes_count = 0;
+@@ -546,7 +547,7 @@ void free_users_list(list_t** list){
+         iterator = iterator->next;
+         free_users_node(&tmp);
+     }
+-    
++
+     (*list)->head = NULL;
+     (*list)->tail = NULL;
+     (*list)->nodes_count = 0;
+@@ -567,10 +568,10 @@ void free_children_list(list_t** list){
+         iterator = iterator->next;
+         free_dns_node(&tmp);
+     }
+-    
++
+     (*list)->head = NULL;
+     (*list)->tail = NULL;
+     (*list)->nodes_count = 0;
+ 
+     free(*list);
+-}*/
+\ No newline at end of file
++}*/
+diff --git a/structs.h b/structs.h
+index c9cf913..b9b147b 100644
+--- a/structs.h
++++ b/structs.h
+@@ -5,14 +5,8 @@
+ #include <stdio.h>
+ #include <string.h>
+ 
+-#include "utils.h"
+-#include "tasks.h"
+-
+ #define MAX_ADDR_COUNT 20
+ 
+-struct dns_node_t;
+-struct Hierarchy;
+-
+ typedef struct List{
+     struct dns_node_t* head;
+     struct dns_node_t* tail;
+@@ -23,11 +17,11 @@ typedef struct dns_server_t{
+     int server_index;
+     struct dns_server_t* parent;
+     struct List* children;
+-    
++
+     char** addresses;
+     int max_addr_count;
+     int addresses_count;
+-    
++
+     int isFault;
+     int debugCode;
+ }dns_server_t;
+@@ -105,4 +99,4 @@ void free_dns_server(dns_server_t** dns_server);
+ void free_dns_node(dns_node_t** dns_node);
+ void free_dns_list(list_t** list);
+ 
+-#endif
+\ No newline at end of file
++#endif
+diff --git a/tasks.h b/tasks.h
+index 60ab0b1..75c98ba 100644
+--- a/tasks.h
++++ b/tasks.h
+@@ -5,7 +5,6 @@
+ #include <stdio.h>
+ #include <string.h>
+ 
+-#include "utils.h"
+ #include "structs.h"
+ 
+ void tree_construction(Hierarchy_t** hierarchy);
+@@ -13,4 +12,4 @@ void hierarchy_initialization();
+ void user_queries();
+ void fault_tollerance();
+ 
+-#endif
+\ No newline at end of file
++#endif
+diff --git a/tema2 b/tema2
+deleted file mode 100755
+index 7a923bdaac9ba973aa120fa40a542d5358b5e774..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 34048
+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
+
+diff --git a/utils.c b/utils.c
+index 4863df8..5383aa8 100644
+--- a/utils.c
++++ b/utils.c
+@@ -1,4 +1,5 @@
+ #include "utils.h"
++#include "structs.h"
+ 
+ int check_string_duplicate(char** container,int containter_size, char* new_char){
+     if(!container){
+@@ -25,15 +26,15 @@ int check_string_duplicate(char** container,int containter_size, char* new_char)
+ }
+ 
+ temp_dns_struct_t* read_from_tree_in(Hierarchy_t** Hierarchy,int* servers_count){
+-    
++
+     FILE* tree_fh = fopen("tree.in","r");
+     temp_dns_struct_t* servers = NULL;
+-    
++
+     if(tree_fh){
+         int dns_count = 0;
+         fscanf(tree_fh,"%d",&dns_count);
+         int i;
+-        
++
+         servers = (temp_dns_struct_t*)calloc(dns_count,sizeof(temp_dns_struct_t));
+         for(i = 0; i<dns_count; i++){
+             int curr_dns;
+@@ -42,7 +43,7 @@ temp_dns_struct_t* read_from_tree_in(Hierarchy_t** Hierarchy,int* servers_count)
+             fscanf(tree_fh,"%d",&curr_dns);
+             fscanf(tree_fh,"%d",&parent_dns);
+             fscanf(tree_fh,"%d",&addr_count);
+-           
++
+             servers[i].server_index = curr_dns;
+             servers[i].parent_index = parent_dns;
+             servers[i].addresses_count = addr_count;
+@@ -59,4 +60,4 @@ temp_dns_struct_t* read_from_tree_in(Hierarchy_t** Hierarchy,int* servers_count)
+         fprintf(stdout,"Could not open tree.in for reading\n");
+         return NULL;
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/utils.h b/utils.h
+index 6ad5d0e..df80321 100644
+--- a/utils.h
++++ b/utils.h
+@@ -5,11 +5,8 @@
+ #include <stdio.h>
+ #include <string.h>
+ 
+-#include "tasks.h"
+-#include "structs.h"
+-
+ int check_string_duplicate(char** container,int containter_size, char* new_char);
+ //temp_dns_struct* read_from_tree_in(Hierarchy** hierarchy,int* servers_count);
+ 
+ 
+-#endif
+\ No newline at end of file
++#endif
+-- 
+2.17.1
+

@@ -5,12 +5,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "utils.h"
 #include "structs.h"
 
-void tree_construction();
-void hierarchy_initialization();
-void user_queries();
+void tree_construction(Hierarchy_t** hierarchy);
+void hierarchy_initialization(Hierarchy_t** hierarchy);
+void user_queries(Hierarchy_t** hierarchy,user_list_t** user_list);
 void fault_tollerance();
 
 #endif
