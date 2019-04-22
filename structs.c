@@ -363,7 +363,6 @@ void print_dns_server_childern(dns_server_t** dns_server){
         return;
     }
 
-    int children_count = (*dns_server)->children->nodes_count;
     print_dns_list(&((*dns_server)->children));
 }
 
@@ -384,8 +383,6 @@ void print_dns_server_parent_index(dns_server_t** dns_server){
         fprintf(stdout,"Server has a NULL parent\n");
         return;
     }
-
-    int dns_server_index = (*dns_server)->server_index;
 }
 
 void print_dns_server_addresses(dns_server_t** dns_server){
@@ -627,7 +624,7 @@ void free_tree_recursively(dns_server_t** parent){
         fprintf(stdout,"No server to free, already NULL\n");
         return;
     }
-    
+
     if(hasChildren(parent)){
         dns_node_t* iter = (*parent)->children->head;
         while(iter!=NULL){
