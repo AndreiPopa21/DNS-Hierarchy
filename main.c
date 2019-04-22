@@ -8,20 +8,17 @@
 
 void test();
 void test_get_node_at(list_t** list,int position);
+void test_get_and_traverse(Hierarchy_t** dns_hierarchy);
 
 int main(){
     fprintf(stdout,"Created exe\n");
 
     Hierarchy_t* dns_hierarchy = initialize_hierarchy();
     tree_construction(&dns_hierarchy);
-    //hierarchy_initialization(&dns_hierarchy);
-    //test();
+    hierarchy_initialization(&dns_hierarchy);
+    
     user_list_t* users_list = initialize_user_list(5);
-
-    dns_server_t* root = dns_hierarchy->root;
-    dns_server_t** found = (dns_server_t**)calloc(1,sizeof(dns_server_t*));
-    get_server(&root,found,1);
-    traverse_bottom_up(found);
+    user_queries(&dns_hierarchy,&users_list);
 
     free_users_list(&users_list);
     free_hierarchy(&dns_hierarchy);
@@ -29,6 +26,14 @@ int main(){
     fprintf(stdout,"Finished exe\n");
 
     return 0;
+}
+
+void test_get_and_traverse(Hierarchy_t** dns_hierarchy){
+
+    dns_server_t* root = (*dns_hierarchy)->root;
+    dns_server_t** found = (dns_server_t**)calloc(1,sizeof(dns_server_t*));
+    get_server(&root,found,120);
+    traverse_bottom_up(found);
 }
 
 void test(){

@@ -24,6 +24,7 @@ hierarchy.out:
 	touch hierarchy.out
 users.in:
 	touch users.in
+	cat users_in_input > users.in
 queries.in:
 	touch queries.in
 queries.out:

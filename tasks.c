@@ -104,11 +104,43 @@ void hierarchy_initialization(Hierarchy_t** hierarchy){
     fprintf(stdout,"Finished second task!\n");
 }
 
-void user_queries(Hierarchy_t** hierarchy){
+void user_queries(Hierarchy_t** hierarchy, user_list_t** user_list){
+
     fprintf(stdout,"Third task...\n");
     if(!(*hierarchy)){
         fprintf(stdout,"Passed NULL hierarchy to third task\n");
         return;
     }
+    if(!(*user_list)){
+        fprintf(stdout,"Passed NULL users list to third task\n");
+        return;
+    }
+
+    FILE* fh = fopen("users.in","r+");
+
+    if(!fh){
+        fprintf(stdout,"Could not open users.in file\n");
+        return;
+    }
+
+    int users_count = 0;
+    fscanf(fh,"%d",&users_count);
+    fprintf(stdout,"Users count: %d\n", users_count);
+    int i;
+    int user_index;
+    int server_index;
+    dns_server_t** found = (dns_server_t**)calloc(1,sizeof(dns_server_t*));
+    dns_server_t* root = (*hierarchy)->root;
+    for(i=0;i<users_count;i++){
+        fscanf(fh,"%d",&user_index);
+        fscanf(fh,"%d",&server_index);
+        get_server(&root, found,server_index);
+        
+        //fprintf(stdout,"User index: %d , His server index %d\n",user_index,server_index);
+    }
+
+    fclose(fh);
+
+
     fprintf(stdout,"Finished third task\n");
 }
