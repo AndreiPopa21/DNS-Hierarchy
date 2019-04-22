@@ -263,11 +263,10 @@ void push_user_node(Hierarchy_t** hier, user_list_t** users_list,int user_index,
         return;
     }
     
-
     user_node_t* new_user_node = initialize_user_node(user_index,found);
+
     if(new_user_node){
         if(!(*users_list)->head){
-            fprintf(stdout,"Users list head is NULL\n");
             (*users_list)->head = new_user_node;
             (*users_list)->tail = new_user_node;
             (*users_list)->users_count = 1;
@@ -278,8 +277,7 @@ void push_user_node(Hierarchy_t** hier, user_list_t** users_list,int user_index,
             (*users_list)->users_count +=1;
         }
     }
-     free(found);
-    
+     free(found); 
 }
 
 void print_dns_list(list_t** list){
@@ -311,7 +309,6 @@ void print_dns_list(list_t** list){
         fprintf(stdout,"%d - ", get_dns_node_server_index(&iterator));
     }
     fprintf(stdout,"NULL\n");
-
 }
 
 void print_dns_list_reverse(list_t** list){

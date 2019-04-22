@@ -7,7 +7,6 @@
 #include "structs.h"
 
 int main(){
-    fprintf(stdout,"Created exe\n");
 
     Hierarchy_t* dns_hierarchy = initialize_hierarchy();
     tree_construction(&dns_hierarchy);
@@ -20,7 +19,5 @@ int main(){
     free_tree_recursively(&(dns_hierarchy->root));
     free_hierarchy(&dns_hierarchy);
     
-    fprintf(stdout,"Finished exe\n");
-
     return 0;
 }

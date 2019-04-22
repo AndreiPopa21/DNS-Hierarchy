@@ -3,8 +3,6 @@
 
 void tree_construction(Hierarchy_t** hierarchy){
     
-    fprintf(stdout,"First task...\n");
-
     if(!(*hierarchy)){
         fprintf(stdout,"Hierarchy is NULL\n");
         return;
@@ -55,13 +53,10 @@ void tree_construction(Hierarchy_t** hierarchy){
     fclose(fh);
     free_temp_dns_array(&temp_dns,servers_count);
     free(server_array);
-
-    fprintf(stdout,"Finished first task!\n");
 }
 
 void hierarchy_initialization(Hierarchy_t** hierarchy){
     
-    fprintf(stdout,"Second task...\n");
     if(!(*hierarchy)){
         fprintf(stdout,"Passed NULL hierarchy to second task\n");
         return;
@@ -72,12 +67,10 @@ void hierarchy_initialization(Hierarchy_t** hierarchy){
     cluster_children_addresses(NULL,&root);
     read_dns_servers_recursively(&root,fh);
     fclose(fh);
-    fprintf(stdout,"Finished second task!\n");
 }
 
 void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
 
-    fprintf(stdout,"Third task...\n");
     if(!(*hierarchy)){
         fprintf(stdout,"Passed NULL hierarchy to third task\n");
         return;
@@ -174,5 +167,4 @@ void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
 
     free(found_user);
     free(found_server);
-    fprintf(stdout,"Finished third task\n");
 }
