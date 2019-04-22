@@ -27,5 +27,6 @@ users.in:
 	cat users_in_input > users.in
 queries.in:
 	touch queries.in
+	cat queries_in_input > queries.in
 queries.out:
 	touch queries.out

@@ -139,7 +139,29 @@ void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
     }
     fclose(fh);
 
-    
+    int queries_count = 0;
+    fh = fopen("queries.in","r+");
+    if(!fh){
+        fprintf(stdout,"Could not open queries.in file\n");
+        return;
+    }
+    fscanf(fh,"%d",&queries_count);
+    //printf("Queries count: %d\n",queries_count);
+    char param[10];
+    char looked_address[50];
+    for(i = 0; i < queries_count; i++){
+        fscanf(fh,"%s",param);
+        if(strcmp(param,"q")==0){
+            printf("We have query!\n");
+            fscanf(fh,"%d",&user_index);
+            fscanf(fh,"%s",looked_address);
+            //printf("%s %d %s\n",param,user_index,looked_address); 
+        }else{
+            if(strcmp(param,"f")==0){
+
+            }
+        }
+    }
 
 
     fprintf(stdout,"Finished third task\n");

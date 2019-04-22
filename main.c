@@ -19,7 +19,7 @@ int main(){
     hierarchy_initialization(&dns_hierarchy);
     
     user_list_t* users_list = initialize_user_list(5);
-    //user_queries(&dns_hierarchy,&users_list);
+    user_queries(&dns_hierarchy,&users_list);
     //print_users_list(&users_list);
     //test_get_and_traverse(&dns_hierarchy);
     free_users_list(&users_list);
