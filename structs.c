@@ -246,7 +246,6 @@ void add_address_for_server(dns_server_t** dns_server,char* address){
 
 
     (*dns_server)->addresses[curr_addr_count] = address;
-       // fprintf(stdout,"ADDING %s\n",(*dns_server)->addresses[curr_addr_count]);
 
     curr_addr_count +=1;
    
@@ -611,7 +610,8 @@ void free_tree_recursively(dns_server_t** parent){
             //addr_length +=1;
             /*for(int j = 0;j<addr_length;j++)
                 free((*parent)->addresses[i][j*/
-            free((*parent)->addresses[i]);
+            if((*parent)->addresses[i])
+                free((*parent)->addresses[i]);
         }
         free((*parent)->addresses);
         free(*parent);

@@ -141,12 +141,6 @@ void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
 
     user_node_t** found_user = (user_node_t**)calloc(1,sizeof(user_node_t*));
     dns_server_t** found_server = (dns_server_t**)calloc(1,sizeof(dns_server_t*));
-    /*int result = get_user(users_list,found,1);
-    if(result){
-        printf("AM GASIT!\n");
-    }else{
-        printf("NU AM GASIT\n");
-    }*/
 
     int queries_count = 0;
     fh = fopen("queries.in","r+");
@@ -163,10 +157,9 @@ void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
     }
 
     fscanf(fh,"%d",&queries_count);
-    //printf("Queries count: %d\n",queries_count);
     char param[10];
-    //char looked_address[50];
     char** looked_addresses = (char**)calloc(queries_count,sizeof(char*));
+    
     for(i = 0;i<queries_count;i++){
         looked_addresses[i] = (char*)calloc(50,sizeof(char));
     }
@@ -175,8 +168,8 @@ void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
         fscanf(fh,"%s",param);
         (*found_server)= NULL;
         (*found_user)= NULL;
+        
         if(strcmp(param,"q")==0){
-            //printf("We have query!\n");
             fscanf(fh,"%d",&user_index);
             fscanf(fh,"%s",looked_addresses[i]);
             
@@ -188,10 +181,23 @@ void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
             //printf("%s %d %s\n",param,user_index,looked_address); 
         }else{
             if(strcmp(param,"f")==0){
-
+                (*found_server)=NULL;
+                fscanf(fh,"%d",&server_index);
+                int result = get_server(&((*hierarchy)->root),found_server,server_index);
+                if(result == 1){
+                    pass_faulty_server_users(found_server,users_list);
+                }
+                
             }
         }
     }
+
+    /*for(i = 0; i<queries_count;i++){
+        if(looked_addresses[i]){
+            free(looked_addresses[i]);
+        }
+    }
+    free(looked_addresses);*/
 
     fclose(fh);
     fclose(q_fh);

@@ -279,3 +279,39 @@ int contains_address(dns_server_t** dns_server, char* address){
 
     return contains;
 }
+
+void pass_faulty_server_users(dns_server_t** dns_server, user_list_t** users_list){
+    if(!(*dns_server)){
+        fprintf(stdout,"Passed NULL server to faulty server function\n");
+        return;
+    }
+    if(!(*users_list)){
+        fprintf(stdout,"NULL users list passed\n");
+        return;
+    }
+
+    user_node_t* iter = (*users_list)->head;
+    int server_index = (*dns_server)->server_index;
+    dns_server_t* parent = (*dns_server)->parent;
+    while(iter){
+        int user_server_index = iter->server->server_index;
+        if(server_index == user_server_index){
+            iter->server = parent;
+        }
+        iter = iter->next;
+    }
+}
+
+void pass_faulty_server_children(dns_server_t** dns_server){
+    if(!(*dns_server)){
+        fprintf(stdout,"NULL server,faulty server children\n");
+        return;
+    }
+    dns_node_t* iter = (*dns_server)->children->head;
+    
+    while(iter){
+        iter->dns_server->parent = (*dns_server)->parent;
+        push_back_dns_child(&((*dns_server)->parent),&(iter->dns_server));
+        iter=iter->next;
+    }
+}

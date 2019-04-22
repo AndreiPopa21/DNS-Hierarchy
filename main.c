@@ -28,7 +28,7 @@ int main(){
     //test_get_and_traverse(&dns_hierarchy);
     free_users_list(&users_list);
     
-    //free_tree_recursively(&root);
+    free_tree_recursively(&root);
 
     free_hierarchy(&dns_hierarchy);
     

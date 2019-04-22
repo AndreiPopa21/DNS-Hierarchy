@@ -21,6 +21,9 @@ int get_user(user_list_t** users_list,user_node_t** found, int user_index);
 void traverse_bottom_up(dns_server_t** child);
 void traverse_bottom_up_for_address(dns_server_t** child,char* address, FILE* fh);
 
+void pass_faulty_server_users(dns_server_t** dns_server, user_list_t** users_list);
+void pass_faulty_server_children(dns_server_t** dns_server);
+
 int contains_address(dns_server_t** dns_server, char* address);
 
 #endif
