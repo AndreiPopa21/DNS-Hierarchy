@@ -75,6 +75,7 @@ user_list_t* initialize_user_list(int users_count);
 
 void push_back_dns_child(dns_server_t** parent, dns_server_t** child);
 void delete_at_dns_child(dns_server_t** server, int position);
+void push_user_node(user_list_t** user_list,int server_index);
 
 void push_back_dns_list(list_t** list, dns_server_t* dns_server);
 dns_node_t* get_dns_node_at(list_t** list, int position);

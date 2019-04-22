@@ -421,8 +421,6 @@ int hasChildren(dns_server_t** dns_server){
 
 
 
-
-
 void free_dns_server(dns_server_t** dns){
     if(!(*dns))
         return;

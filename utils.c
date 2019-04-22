@@ -151,3 +151,60 @@ void read_dns_servers_recursively(dns_server_t** dns_server,FILE* fh){
         }
     }
 }
+
+
+int get_server(dns_server_t** root, dns_server_t** found,int server_index){
+
+    if(!root){
+        fprintf(stdout,"Double-pointer NULL when getting server\n");
+        return 0;
+    }
+    if(!(*root)){
+        fprintf(stdout,"Root missing\n");
+        return 0;
+    }
+    if((*found)) {
+        return 1;
+    }
+
+    if((*root)->server_index == server_index){
+        (*found) = (*root);
+        return 1;
+    }else{
+        if(hasChildren(root)){
+            dns_node_t* iter = (*root)->children->head;
+            int toContinue = 1;
+            while(toContinue && iter){
+                int result = get_server(&(iter->dns_server), found, server_index);
+                if(result){
+                    toContinue = 0;
+                }
+                iter = iter->next;
+            }
+            if(!found){
+                return 1;
+            }else{
+                return 0;
+            }
+        }else{
+            return 0;
+        }
+    }
+
+    return 0;
+    
+}
+
+void traverse_bottom_up(dns_server_t** child){
+    if(!(*child)){
+        fprintf(stdout,"Cannot traverse from NULL child\n");
+    }else{
+        dns_server_t* parent = (*child)->parent;
+        if(!parent){
+            fprintf(stdout," - (-1)\n");
+        }else{
+            fprintf(stdout," - %d",(*child)->server_index);
+            traverse_bottom_up(&parent);
+        }
+    }
+}

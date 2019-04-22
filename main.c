@@ -13,14 +13,16 @@ int main(){
     fprintf(stdout,"Created exe\n");
 
     Hierarchy_t* dns_hierarchy = initialize_hierarchy();
-    //tree_construction(&dns_hierarchy);
+    tree_construction(&dns_hierarchy);
     //hierarchy_initialization(&dns_hierarchy);
     //test();
     user_list_t* users_list = initialize_user_list(5);
 
+    dns_server_t* root = dns_hierarchy->root;
+    dns_server_t** found = (dns_server_t**)calloc(1,sizeof(dns_server_t*));
+    get_server(&root,found,1);
+    traverse_bottom_up(found);
 
-
-    
     free_users_list(&users_list);
     free_hierarchy(&dns_hierarchy);
 
