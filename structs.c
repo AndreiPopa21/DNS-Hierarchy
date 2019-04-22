@@ -229,38 +229,11 @@ void add_address_for_server(dns_server_t** dns_server,char* address){
     if(curr_addr_count >= max_addr_count){
         int new_max_addr_count = max_addr_count + 100;
         (*dns_server)->addresses = (char**)realloc((*dns_server)->addresses,new_max_addr_count*sizeof(char*));
-        //int i;
-        /*for(i = curr_addr_count;i<new_max_addr_count;i++){
-            (*dns_server)->addresses[i] = NULL;
-            (*dns_server)->addresses[i] = '\0';
-        }*/
-        if((*dns_server)->addresses == NULL){
-            fprintf(stdout,"WTFFFFF\n");
-        }
         (*dns_server)->max_addr_count = new_max_addr_count;
-        fprintf(stdout,"Needed to reallocate addresses space\n");
     }
     
-   //fprintf(stdout,"MAX: %d | ",(*dns_server)->max_addr_count);
-   //fprintf(stdout,"TIMES: %d | SERVER_INDEX: %d| ADDR: %s| COUNT: %d\n",times,curr_index,address,(*dns_server)->addresses_count);
-
-
     (*dns_server)->addresses[curr_addr_count] = address;
-   /* char* a=NULL;
-    char* b=NULL;
-    a = (*dns_server)->addresses[curr_addr_count];
-    b = address;
-
-    while(*b!='\0'){
-        *a = *b;
-        a++;
-        b++;
-    }
-    *a = '\0';
-    */
-    curr_addr_count +=1;
-   
-   (*dns_server)->addresses_count= curr_addr_count;
+    (*dns_server)->addresses_count++;
 }
 
 void push_user_node(Hierarchy_t** hier, user_list_t** users_list,int user_index, int server_index){
@@ -494,10 +467,8 @@ int hasChildren(dns_server_t** dns_server){
     }
 }
 
-
-
-
 void free_dns_server(dns_server_t** dns){
+   
     if(!(*dns))
         return;
     (*dns)->isFault = 0;
@@ -509,15 +480,7 @@ void free_dns_server(dns_server_t** dns){
         }
     }
     free((*dns)->addresses);
-    /*for (i = 0; i < (*dns)->children->nodes_count; i++)
-        free_dns_node()*/
-    //dns_node_t* iterator;
-   /* for(iterator = (*dns)->children->head; iterator!=NULL; ){
-        dns_node_t* tmp = iterator;
-        iterator = iterator->next;
-        free(tmp);
-    }
-    free((*dns)->children);*/
+  
     free_dns_list(&((*dns)->children));
 
     free((*dns));
@@ -562,10 +525,7 @@ void free_temp_dns_array(temp_dns_struct_t*** temp_array,int size){
         (*temp_array)[i]->server_index = 0;
         (*temp_array)[i]->parent_index = 0;
         (*temp_array)[i]->addresses_count = 0;
-       // int j;
-        /*for( j=0 ; j<addr_count; j++){
-            free((*temp_array)[i]->addresses[j]);
-        }*/
+      
         free((*temp_array)[i]->addresses);
         free((*temp_array)[i]);
     }
@@ -614,17 +574,6 @@ void free_tree_recursively(dns_server_t** parent){
         }
     }else{
         free_dns_list(&((*parent)->children));
-        int addr_count = (*parent)->addresses_count;
-        int i;
-        for(i=0;i<addr_count;i++){
-            //int addr_length = strlen((*parent)->addresses[i]);
-            //printf("AI AICI NUSH %d\n",addr_length);
-            //addr_length +=1;
-            /*for(int j = 0;j<addr_length;j++)
-                free((*parent)->addresses[i][j*//*
-            if((*parent)->addresses[i])
-                free((*parent)->addresses[i]);*/
-        }
         free((*parent)->addresses);
         free(*parent);
     }

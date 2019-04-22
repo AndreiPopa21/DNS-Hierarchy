@@ -17,7 +17,7 @@ int main(){
     user_queries(&dns_hierarchy,&users_list);
  
     free_users_list(&users_list);
-
+    free_tree_recursively(&(dns_hierarchy->root));
     free_hierarchy(&dns_hierarchy);
     
     fprintf(stdout,"Finished exe\n");
