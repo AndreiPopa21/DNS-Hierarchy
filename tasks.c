@@ -192,12 +192,12 @@ void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
         }
     }
 
-    /*for(i = 0; i<queries_count;i++){
+    for(i = 0; i<queries_count;i++){
         if(looked_addresses[i]){
             free(looked_addresses[i]);
         }
     }
-    free(looked_addresses);*/
+    free(looked_addresses);
 
     fclose(fh);
     fclose(q_fh);

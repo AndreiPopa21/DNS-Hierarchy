@@ -246,12 +246,21 @@ void add_address_for_server(dns_server_t** dns_server,char* address){
 
 
     (*dns_server)->addresses[curr_addr_count] = address;
+   /* char* a=NULL;
+    char* b=NULL;
+    a = (*dns_server)->addresses[curr_addr_count];
+    b = address;
 
+    while(*b!='\0'){
+        *a = *b;
+        a++;
+        b++;
+    }
+    *a = '\0';
+    */
     curr_addr_count +=1;
    
    (*dns_server)->addresses_count= curr_addr_count;
-
-    //fprintf(stdout,"DAAAA\n");
 }
 
 void push_user_node(Hierarchy_t** hier, user_list_t** users_list,int user_index, int server_index){
@@ -552,7 +561,6 @@ void free_temp_dns_array(temp_dns_struct_t*** temp_array,int size){
     for(i = 0; i < size; i++){
         (*temp_array)[i]->server_index = 0;
         (*temp_array)[i]->parent_index = 0;
-        //int addr_count = (*temp_array)[i]->addresses_count;
         (*temp_array)[i]->addresses_count = 0;
        // int j;
         /*for( j=0 ; j<addr_count; j++){
@@ -577,7 +585,6 @@ void free_users_list(user_list_t** users_list){
         free(tmp);
     }
     free(*users_list);
-   // free(users_list);
 }
 
 void free_hierarchy(Hierarchy_t** hierarchy){
@@ -589,6 +596,11 @@ void free_hierarchy(Hierarchy_t** hierarchy){
 }
 
 void free_tree_recursively(dns_server_t** parent){
+
+    if(!parent){
+        return;
+    }
+
     if(!(*parent)){
         fprintf(stdout,"No server to free, already NULL\n");
         return;
@@ -609,9 +621,9 @@ void free_tree_recursively(dns_server_t** parent){
             //printf("AI AICI NUSH %d\n",addr_length);
             //addr_length +=1;
             /*for(int j = 0;j<addr_length;j++)
-                free((*parent)->addresses[i][j*/
+                free((*parent)->addresses[i][j*//*
             if((*parent)->addresses[i])
-                free((*parent)->addresses[i]);
+                free((*parent)->addresses[i]);*/
         }
         free((*parent)->addresses);
         free(*parent);
