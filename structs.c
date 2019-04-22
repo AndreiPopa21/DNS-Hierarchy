@@ -21,6 +21,8 @@ user_list_t* initialize_user_list(){
 
 dns_server_t* initialize_dns_server(int server_index){
     
+    int i = 0;
+
     dns_server_t* new_dns = (dns_server_t*)malloc(1*sizeof(dns_server_t));
     new_dns->parent = NULL;
     new_dns->isFault = 0;
@@ -28,7 +30,7 @@ dns_server_t* initialize_dns_server(int server_index){
     new_dns->addresses_count = 0;
     new_dns->max_addr_count = MAX_ADDR_COUNT;
     new_dns->addresses = (char**)malloc(MAX_ADDR_COUNT*sizeof(char*));
-    int i;
+
     for(i=0;i<MAX_ADDR_COUNT;i++){
         new_dns->addresses[i]=NULL;
         new_dns->addresses[i]='\0';
@@ -146,6 +148,8 @@ void delete_at_dns_child(dns_server_t** server, int position){
 
 void delete_at_dns_list(list_t** list, int position){
     
+    int i = 0;
+
     if(!(*list)){
         fprintf(stdout,"You gave me NULL list to delete at\n");
         return;
@@ -197,16 +201,18 @@ void delete_at_dns_list(list_t** list, int position){
         return;
     }
     dns_node_t* iter = (*list)->head;
-    int i;
+    
     for(i = 0; i<position; i++){
         iter = iter->next;
     }
+
     dns_node_t* prev = iter->prev;
     dns_node_t* next = iter->next;
     prev->next = next;
     next->prev = prev;
-    free_dns_node(&iter);
     (*list)->nodes_count -=1;
+
+    free_dns_node(&iter);
 }
 
 void add_address_for_server(dns_server_t** dns_server,char* address){
@@ -277,7 +283,8 @@ void push_user_node(Hierarchy_t** hier, user_list_t** users_list,int user_index,
             (*users_list)->users_count +=1;
         }
     }
-     free(found); 
+    
+    free(found); 
 }
 
 void print_dns_list(list_t** list){
@@ -305,9 +312,11 @@ void print_dns_list(list_t** list){
     dns_node_t* iterator;
     fprintf(stdout,"List has %d nodes\n",(*list)->nodes_count);
     fprintf(stdout,"Printing list: ");
+
     for(iterator = (*list)->head; iterator!=NULL; iterator = iterator->next){
         fprintf(stdout,"%d - ", get_dns_node_server_index(&iterator));
     }
+
     fprintf(stdout,"NULL\n");
 }
 
@@ -335,9 +344,11 @@ void print_dns_list_reverse(list_t** list){
     dns_node_t* iterator;
     fprintf(stdout,"List has %d nodes\n",(*list)->nodes_count);
     fprintf(stdout,"Printing list in reverse: ");
+
     for(iterator = (*list)->tail; iterator!=NULL; iterator = iterator->prev){
         fprintf(stdout,"%d - ", get_dns_node_server_index(&iterator));
     }
+
     fprintf(stdout,"NULL\n");
 }
 
@@ -351,18 +362,20 @@ void print_dns_server_childern(dns_server_t** dns_server){
         fprintf(stdout,"The children list for this dns is NULL");
         return;
     }
-    int children_count = (*dns_server)->children->nodes_count;
-    fprintf(stdout,"Dns_server %d has %d children\n",(*dns_server)->server_index,children_count);
-    print_dns_list(&((*dns_server)->children));
 
+    int children_count = (*dns_server)->children->nodes_count;
+    print_dns_list(&((*dns_server)->children));
 }
 
 void print_dns_server_parent_index(dns_server_t** dns_server){
+    
     if(!(*dns_server)){
         fprintf(stdout,"Passed NULL server\n");
         return;
     }
+
     int parent_index = get_dns_server_parent_index(dns_server);
+    
     if(parent_index == -200){
         fprintf(stdout,"Passed NULL server\n");
         return;
@@ -371,12 +384,14 @@ void print_dns_server_parent_index(dns_server_t** dns_server){
         fprintf(stdout,"Server has a NULL parent\n");
         return;
     }
+
     int dns_server_index = (*dns_server)->server_index;
-    fprintf(stdout,"For server %d, parent has %d index\n",dns_server_index,parent_index);
 }
 
 void print_dns_server_addresses(dns_server_t** dns_server){
 
+    int i;
+    
     if(!(dns_server)){
         fprintf(stdout,"Could not print addresses for a NULL server\n");
         return;
@@ -389,19 +404,23 @@ void print_dns_server_addresses(dns_server_t** dns_server){
         fprintf(stdout,"Server has no addresses to be printed\n");
         return;
     }
-    int i;
+    
     int dns_server_index = (*dns_server)->server_index;
     int addresses_count = (*dns_server)->addresses_count;
     fprintf(stdout,"Printing addresses for %d server: ",dns_server_index);
+
     for( i = 0; i < addresses_count; i++){
         fprintf(stdout,"%s - ",(*dns_server)->addresses[i]);
     }
+
     fprintf(stdout,"NULL\n");
     fprintf(stdout,"%d addresses printed\n",addresses_count);
 }
 
 void print_temp_struct(temp_dns_struct_t** tmp){
 
+    int j;
+    
     if(!(*tmp)){
         fprintf(stdout,"Could not prin temp_dns, is NULL\n");
         return;
@@ -412,10 +431,11 @@ void print_temp_struct(temp_dns_struct_t** tmp){
     fprintf(stdout,"Parent index %d\n",(*tmp)->parent_index);
     fprintf(stdout,"Addresses count: %d\n",(*tmp)->addresses_count);
     fprintf(stdout,"Addresses: ");
-    int j;
+    
     for(j=0;j<(*tmp)->addresses_count;j++){
         fprintf(stdout,"%s - ",(*tmp)->addresses[j]);
     }
+
     fprintf(stdout,"\n\n");
 }
 
@@ -425,8 +445,10 @@ void print_users_list(user_list_t** users_list){
         fprintf(stdout,"Could not print NULL users list\n");
         return;
     }
+
     fprintf(stdout,"Printing users list...\n");
     user_node_t* iter = (*users_list)->head;
+
     while(iter){
         int user_index = iter->user_index;
         dns_server_t* server = iter->server;
@@ -448,6 +470,7 @@ int get_dns_node_server_index(dns_node_t** dns_node){
         fprintf(stdout,"Get server index, dns node has an empty dns_server ref\n");
         return -100;
     }
+
     return (*dns_node)->dns_server-> server_index;
 }
 
@@ -457,10 +480,12 @@ int get_dns_server_parent_index(dns_server_t** dns_server){
         fprintf(stdout,"Could not get parent index, NULL dns_server\n");
         return -200;
     }
+
     if(!(*dns_server)->parent){
         fprintf(stdout,"Could not get parent index, parent NULL\n");
         return -100;
     }
+
     return (*dns_server)->parent->server_index;
 }
 
@@ -471,11 +496,14 @@ int hasChildren(dns_server_t** dns_server){
         return 0;
     }
     list_t* children_list = (*dns_server)->children;
+    
     if(!children_list){
         fprintf(stdout,"Children list NULL\n");
         return 0;
     }
+    
     int children_count = (*dns_server)->children->nodes_count;
+    
     if(children_count > 0){
         return 1;
     }else{
@@ -485,16 +513,21 @@ int hasChildren(dns_server_t** dns_server){
 
 void free_dns_server(dns_server_t** dns){
    
-    if(!(*dns))
+    int  i = 0;
+    
+    if(!(*dns)){
         return;
+    }
+        
     (*dns)->isFault = 0;
     (*dns)->parent = NULL;
-    int i;
+    
     for(i = 0;i< (*dns)->max_addr_count; i++){
         if((*dns)->addresses[i]!=NULL){
             free((*dns)->addresses[i]);
         }
     }
+
     free((*dns)->addresses);
     free_dns_list(&((*dns)->children));
     free((*dns));
@@ -502,22 +535,25 @@ void free_dns_server(dns_server_t** dns){
 
 void free_dns_node(dns_node_t** dns_node){
 
-    if(!(*dns_node))
+    if(!(*dns_node)){
         return;
-    fprintf(stdout,"Se curata %p\n",*dns_node);
+    }
+        
     (*dns_node)->dns_server = NULL;
     (*dns_node)->next = NULL;
     (*dns_node)->prev = NULL;
+
     free((*dns_node));
 }
 
 void free_dns_list(list_t** list){
 
+    dns_node_t* tmp;
+
     if(!(*list)){
         return;
     } 
 
-    dns_node_t* tmp;
     while((*list)->head){
         tmp = (*list)->head;
         (*list)->head = (*list)->head->next;
@@ -527,16 +563,19 @@ void free_dns_list(list_t** list){
     (*list)->nodes_count = 0;
     (*list)->head = NULL;
     (*list)->tail = NULL;
+
     free((*list));
 }
 
 void free_temp_dns_array(temp_dns_struct_t*** temp_array,int size){
     
+    int i = 0;
+    
     if(!(*temp_array)){
         fprintf(stdout,"Temp array is NULL, unable to free\n");
         return;
     }
-    int i;
+    
     for(i = 0; i < size; i++){
         (*temp_array)[i]->server_index = 0;
         (*temp_array)[i]->parent_index = 0;
@@ -545,6 +584,7 @@ void free_temp_dns_array(temp_dns_struct_t*** temp_array,int size){
         free((*temp_array)[i]->addresses);
         free((*temp_array)[i]);
     }
+
     free((*temp_array));
 }
 
@@ -554,13 +594,16 @@ void free_users_list(user_list_t** users_list){
         fprintf(stdout,"No users list to be freed\n");
         return;
     }
+
     user_node_t* iter = (*users_list)->head;
+    
     while(iter){
         user_node_t* tmp = iter;
         
         iter = iter->next;
         free(tmp);
     }
+    
     free(*users_list);
 }
 
@@ -570,6 +613,7 @@ void free_hierarchy(Hierarchy_t** hierarchy){
         fprintf(stdout,"No hierarchy to be freed\n");
         return;
     }
+
     free(*hierarchy);
 }
 
@@ -583,6 +627,7 @@ void free_tree_recursively(dns_server_t** parent){
         fprintf(stdout,"No server to free, already NULL\n");
         return;
     }
+    
     if(hasChildren(parent)){
         dns_node_t* iter = (*parent)->children->head;
         while(iter!=NULL){
