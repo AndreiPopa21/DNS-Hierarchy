@@ -273,10 +273,11 @@ void push_user_node(Hierarchy_t** hier, user_list_t** users_list,int user_index,
     dns_server_t* root = (*hier)->root;
     int result = get_server(&root,found,server_index);
     
-    if(result == 0 || !(*found)){
+    if(result == 0){
         fprintf(stdout,"Could not get server in order to push user node\n");
         return;
     }
+    
 
     user_node_t* new_user_node = initialize_user_node(user_index,found);
     if(new_user_node){
@@ -428,7 +429,22 @@ void print_temp_struct(temp_dns_struct_t** tmp){
     }
     fprintf(stdout,"\n\n");
 }
-
+void print_users_list(user_list_t** users_list){
+    if(!(*users_list)){
+        fprintf(stdout,"Could not print NULL users list\n");
+        return;
+    }
+    fprintf(stdout,"Printing users list...\n");
+    user_node_t* iter = (*users_list)->head;
+    while(iter){
+        int user_index = iter->user_index;
+        dns_server_t* server = iter->server;
+        int server_index = server->server_index;
+        int addr_count = server->addresses_count;
+        fprintf(stdout,"User: %d | Server: %d | Add_count: %d\n",user_index,server_index,addr_count);
+        iter = iter->next;
+    }
+}
 
 
 

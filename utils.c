@@ -174,14 +174,15 @@ int get_server(dns_server_t** root, dns_server_t** found,int server_index){
         if(hasChildren(root)){
             dns_node_t* iter = (*root)->children->head;
             int toContinue = 1;
+            int result = 0;
             while(toContinue && iter){
-                int result = get_server(&(iter->dns_server), found, server_index);
+                result = get_server(&(iter->dns_server), found, server_index);
                 if(result){
                     toContinue = 0;
                 }
                 iter = iter->next;
             }
-            if(!found){
+            if(result==1){
                 return 1;
             }else{
                 return 0;
