@@ -9,16 +9,17 @@
 void test();
 void test_get_node_at(list_t** list,int position);
 void test_get_and_traverse(Hierarchy_t** dns_hierarchy);
+void test_contains_address(Hierarchy_t** hierarchy);
 
 int main(){
     fprintf(stdout,"Created exe\n");
 
     Hierarchy_t* dns_hierarchy = initialize_hierarchy();
     tree_construction(&dns_hierarchy);
-    //hierarchy_initialization(&dns_hierarchy);
+    hierarchy_initialization(&dns_hierarchy);
     
     user_list_t* users_list = initialize_user_list(5);
-    user_queries(&dns_hierarchy,&users_list);
+    //user_queries(&dns_hierarchy,&users_list);
     //print_users_list(&users_list);
     //test_get_and_traverse(&dns_hierarchy);
     free_users_list(&users_list);
@@ -35,6 +36,18 @@ void test_get_and_traverse(Hierarchy_t** dns_hierarchy){
     dns_server_t** found = (dns_server_t**)calloc(1,sizeof(dns_server_t*));
     get_server(&root,found,4);
     traverse_bottom_up(found);
+}
+
+void test_contains_address(Hierarchy_t** hierarchy){
+     
+    char test_addr[]={"addr8"};
+    dns_server_t* root = (*hierarchy)->root;
+    int result = contains_address(&root,test_addr);
+    if(result){
+        printf("DAAAAAAA\n");
+    }else{
+        printf("NUUUUUU\n");
+    }
 }
 
 void test(){

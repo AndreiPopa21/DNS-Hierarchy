@@ -209,3 +209,21 @@ void traverse_bottom_up(dns_server_t** child){
         }
     }
 }
+
+int contains_address(dns_server_t** dns_server, char* address){
+    if(!(*dns_server)){
+        fprintf(stdout,"NULL server passed to contains_address() function\n");
+        return 0;
+    }
+    int contains = 0;
+    int addr_count = (*dns_server)->addresses_count;
+    int i;
+    for(i = 0; i<addr_count; i++){
+        if(strcmp(address,(*dns_server)->addresses[i]) == 0){
+            contains = 1;
+            break;
+        }
+    }
+
+    return contains;
+}

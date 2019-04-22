@@ -9,15 +9,11 @@ list_t* initialize_list(){
     return new_list;
 }
 
-user_list_t* initialize_user_list(int users_count){
-    if(users_count<=0){
-        fprintf(stdout,"No users for this list\n");
-        return NULL;
-    }
+user_list_t* initialize_user_list(){
     user_list_t* user_list = (user_list_t*)calloc(1,sizeof(user_list_t));
     user_list->head = NULL;
     user_list->tail = NULL;
-    user_list->users_count = users_count;
+    user_list->users_count = 0;
     return user_list;
 }
 

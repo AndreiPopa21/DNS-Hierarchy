@@ -19,4 +19,6 @@ int get_server(dns_server_t** root,dns_server_t** found,int server_index);
 
 void traverse_bottom_up(dns_server_t** child);
 
+int contains_address(dns_server_t** dns_server, char* address);
+
 #endif

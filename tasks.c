@@ -126,20 +126,20 @@ void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
     int users_count = 0;
     fscanf(fh,"%d",&users_count);
     fprintf(stdout,"Users count: %d\n", users_count);
+
+
     int i;
     int user_index;
     int server_index;
-    
-   
     for(i=0;i<users_count;i++){
         fscanf(fh,"%d",&user_index);
         fscanf(fh,"%d",&server_index);
-        //get_server(&root, found,server_index);
         push_user_node(hierarchy,users_list,user_index,server_index);
-        //fprintf(stdout,"User index: %d , His server index %d\n",user_index,server_index);
+        
     }
-
     fclose(fh);
+
+    
 
 
     fprintf(stdout,"Finished third task\n");

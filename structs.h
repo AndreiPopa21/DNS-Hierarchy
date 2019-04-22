@@ -70,7 +70,7 @@ list_t* initialize_list();
 dns_server_t* initialize_dns_server(int server_index);
 dns_node_t* initialize_dns_node(dns_server_t** dns_server);
 Hierarchy_t* initialize_hierarchy();
-user_list_t* initialize_user_list(int users_count);
+user_list_t* initialize_user_list();
 user_node_t* initialize_user_node(int user_index, dns_server_t** dns_server);
 
 void push_back_dns_child(dns_server_t** parent, dns_server_t** child);
@@ -88,6 +88,7 @@ void print_dns_server_childern(dns_server_t** dns_server);
 void print_dns_server_parent_index(dns_server_t** dns_server);
 void print_dns_server_addresses(dns_server_t** dns_server);
 void print_temp_struct(temp_dns_struct_t** tmp);
+void print_users_list(user_list_t** users_list);
 
 int get_dns_node_server_index(dns_node_t** dns_node);
 int get_dns_server_parent_index(dns_server_t** dns_server);
