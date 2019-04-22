@@ -196,9 +196,35 @@ int get_server(dns_server_t** root, dns_server_t** found,int server_index){
     
 }
 
+int get_user(user_list_t** users_list,user_node_t** found, int user_index){
+    if(!(*users_list)){
+        fprintf(stdout,"Passed null users list in get_user function\n");
+        return 0;
+    }
+    if(!found){
+        fprintf(stdout,"NULL found object to store found user in\n");
+        return 0;
+    }
+    int toContinue = 1;
+    user_node_t* iter = (*users_list)->head;
+    while(toContinue && iter){
+        if(iter->user_index == user_index){
+            *found = iter;
+            toContinue = 0;
+            break;
+        }
+        iter = iter->next;
+    }
+    if(toContinue == 0)
+        return 1;
+    else
+        return 0;
+}
+
 void traverse_bottom_up(dns_server_t** child){
     if(!(*child)){
         fprintf(stdout,"Cannot traverse from NULL child\n");
+        return;
     }else{
         dns_server_t* parent = (*child)->parent;
         if(!parent){
@@ -206,6 +232,32 @@ void traverse_bottom_up(dns_server_t** child){
         }else{
             fprintf(stdout," - %d",(*child)->server_index);
             traverse_bottom_up(&parent);
+        }
+    }
+}
+
+void traverse_bottom_up_for_address(dns_server_t** child, char* address, FILE* fh){
+
+    if(!fh){
+        fprintf(stdout,"No file to write stream to\n");
+        return;
+    }
+
+    if(!(*child)){
+        fprintf(stdout,"Cannot traverse from NULL child for address\n");
+        return;
+    }else{
+        fprintf(fh,"%d",(*child)->server_index);
+        if(contains_address(child,address)==1){
+            fprintf(fh,"\n");
+            return;
+        }else{
+           // add_address_for_server(child,address);
+            add_address_for_server(child,address);
+            
+            dns_server_t* parent = (*child)->parent;
+            fprintf(fh," ");
+            traverse_bottom_up_for_address(&parent,address,fh);
         }
     }
 }

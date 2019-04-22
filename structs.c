@@ -246,7 +246,8 @@ void add_address_for_server(dns_server_t** dns_server,char* address){
 
 
     (*dns_server)->addresses[curr_addr_count] = address;
-    
+       // fprintf(stdout,"ADDING %s\n",(*dns_server)->addresses[curr_addr_count]);
+
     curr_addr_count +=1;
    
    (*dns_server)->addresses_count= curr_addr_count;
@@ -288,9 +289,8 @@ void push_user_node(Hierarchy_t** hier, user_list_t** users_list,int user_index,
             (*users_list)->tail = new_user_node;
             (*users_list)->users_count +=1;
         }
-    }else{
-        return;
     }
+     free(found);
     
 }
 
@@ -530,12 +530,13 @@ void free_dns_list(list_t** list){
         return;
 
     dns_node_t* tmp;
-    while(!(*list)->head){
+    while((*list)->head){
         tmp = (*list)->head;
         (*list)->head = (*list)->head->next;
         free_dns_node(&tmp);
     }
 
+    
     (*list)->nodes_count = 0;
     (*list)->head = NULL;
     (*list)->tail = NULL;
@@ -543,6 +544,7 @@ void free_dns_list(list_t** list){
 }
 
 void free_temp_dns_array(temp_dns_struct_t*** temp_array,int size){
+    
     if(!(*temp_array)){
         fprintf(stdout,"Temp array is NULL, unable to free\n");
         return;
@@ -571,10 +573,12 @@ void free_users_list(user_list_t** users_list){
     user_node_t* iter = (*users_list)->head;
     while(iter){
         user_node_t* tmp = iter;
-        free(tmp);
+        
         iter = iter->next;
+        free(tmp);
     }
     free(*users_list);
+   // free(users_list);
 }
 
 void free_hierarchy(Hierarchy_t** hierarchy){
@@ -583,4 +587,34 @@ void free_hierarchy(Hierarchy_t** hierarchy){
         return;
     }
     free(*hierarchy);
+}
+
+void free_tree_recursively(dns_server_t** parent){
+    if(!(*parent)){
+        fprintf(stdout,"No server to free, already NULL\n");
+        return;
+    }
+    if(hasChildren(parent)){
+        dns_node_t* iter = (*parent)->children->head;
+        while(iter!=NULL){
+            dns_server_t* child = iter->dns_server;
+            free_tree_recursively(&child);
+            iter = iter->next;
+        }
+    }else{
+        free_dns_list(&((*parent)->children));
+        int addr_count = (*parent)->addresses_count;
+        int i;
+        for(i=0;i<addr_count;i++){
+            //int addr_length = strlen((*parent)->addresses[i]);
+            //printf("AI AICI NUSH %d\n",addr_length);
+            //addr_length +=1;
+            /*for(int j = 0;j<addr_length;j++)
+                free((*parent)->addresses[i][j*/
+            free((*parent)->addresses[i]);
+        }
+        free((*parent)->addresses);
+        free(*parent);
+    }
+
 }

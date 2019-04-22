@@ -18,12 +18,20 @@ int main(){
     tree_construction(&dns_hierarchy);
     hierarchy_initialization(&dns_hierarchy);
     
+        dns_server_t* root = dns_hierarchy->root;
+
+
     user_list_t* users_list = initialize_user_list(5);
     user_queries(&dns_hierarchy,&users_list);
+    //read_dns_servers_recursively(&root,stdout);
     //print_users_list(&users_list);
     //test_get_and_traverse(&dns_hierarchy);
     free_users_list(&users_list);
+    
+    //free_tree_recursively(&root);
+
     free_hierarchy(&dns_hierarchy);
+    
 
     fprintf(stdout,"Finished exe\n");
 

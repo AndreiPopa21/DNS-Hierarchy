@@ -100,5 +100,6 @@ void free_dns_list(list_t** list);
 void free_temp_dns_array(temp_dns_struct_t*** temp_array, int size);
 void free_users_list(user_list_t** users_list);
 void free_hierarchy(Hierarchy_t** hierarchy);
+void free_tree_recursively(dns_server_t** parent);
 
 #endif

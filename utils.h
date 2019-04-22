@@ -16,8 +16,10 @@ void cluster_children_addresses(dns_server_t** parent,dns_server_t** node);
 void read_dns_servers_recursively(dns_server_t** dns_server,FILE* fh);
 
 int get_server(dns_server_t** root,dns_server_t** found,int server_index);
+int get_user(user_list_t** users_list,user_node_t** found, int user_index);
 
 void traverse_bottom_up(dns_server_t** child);
+void traverse_bottom_up_for_address(dns_server_t** child,char* address, FILE* fh);
 
 int contains_address(dns_server_t** dns_server, char* address);
 

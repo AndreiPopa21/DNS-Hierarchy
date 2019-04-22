@@ -73,8 +73,8 @@ void tree_construction(Hierarchy_t** hierarchy){
 
     fclose(fh);
     free_temp_dns_array(&temp_dns,servers_count);
-
     free(server_array);
+
     fprintf(stdout,"Finished first task!\n");
 
    /* fh = fopen("hierarchy.out","w+");
@@ -125,7 +125,7 @@ void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
 
     int users_count = 0;
     fscanf(fh,"%d",&users_count);
-    fprintf(stdout,"Users count: %d\n", users_count);
+    //fprintf(stdout,"Users count: %d\n", users_count);
 
 
     int i;
@@ -139,22 +139,52 @@ void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
     }
     fclose(fh);
 
+    user_node_t** found_user = (user_node_t**)calloc(1,sizeof(user_node_t*));
+    dns_server_t** found_server = (dns_server_t**)calloc(1,sizeof(dns_server_t*));
+    /*int result = get_user(users_list,found,1);
+    if(result){
+        printf("AM GASIT!\n");
+    }else{
+        printf("NU AM GASIT\n");
+    }*/
+
     int queries_count = 0;
     fh = fopen("queries.in","r+");
+    FILE* q_fh = fopen("queries.out","w+");
+
     if(!fh){
         fprintf(stdout,"Could not open queries.in file\n");
         return;
     }
+
+    if(!q_fh){
+        fprintf(stdout,"Could not open queries.out file\n");
+        return;
+    }
+
     fscanf(fh,"%d",&queries_count);
     //printf("Queries count: %d\n",queries_count);
     char param[10];
-    char looked_address[50];
+    //char looked_address[50];
+    char** looked_addresses = (char**)calloc(queries_count,sizeof(char*));
+    for(i = 0;i<queries_count;i++){
+        looked_addresses[i] = (char*)calloc(50,sizeof(char));
+    }
+
     for(i = 0; i < queries_count; i++){
         fscanf(fh,"%s",param);
+        (*found_server)= NULL;
+        (*found_user)= NULL;
         if(strcmp(param,"q")==0){
-            printf("We have query!\n");
+            //printf("We have query!\n");
             fscanf(fh,"%d",&user_index);
-            fscanf(fh,"%s",looked_address);
+            fscanf(fh,"%s",looked_addresses[i]);
+            
+            int result = get_user(users_list,found_user,user_index);
+            if(result){
+                dns_server_t* user_server = (*found_user)->server;
+                traverse_bottom_up_for_address(&user_server,looked_addresses[i],q_fh);
+            }
             //printf("%s %d %s\n",param,user_index,looked_address); 
         }else{
             if(strcmp(param,"f")==0){
@@ -163,6 +193,10 @@ void user_queries(Hierarchy_t** hierarchy, user_list_t** users_list){
         }
     }
 
+    fclose(fh);
+    fclose(q_fh);
 
+    free(found_user);
+    free(found_server);
     fprintf(stdout,"Finished third task\n");
 }
